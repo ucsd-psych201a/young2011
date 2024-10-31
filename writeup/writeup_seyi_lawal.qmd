@@ -1,0 +1,254 @@
+---
+title: "Replication of Study 1A by Liane Young ad Rebecca Saxe (2011, Cognition)"
+author: "Replication Author[s]: Seyi Lawal"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc_depth: 3
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
+
+## Introduction
+
+The main thesis of the original paper is that while intent matters in making moral judgments, intent will play a smaller role in making moral judgments of purity-related violations vs. harm-related violations.
+In the first study, the authors test whether for harms and purity violations that are equally wrong, when committed intentionally, there's a difference in the moral judgment when those actions are committed accidentally.
+The study is operationalized as a 2 (intent: intentional vs. accidental) x 3 (domain: harm vs. incest vs. ingestion) between subjects design, where participants are presented with moral scenarios and asked to evaluate the extent to which the action is morally wrong on a scale of 1 - 7.
+There are 2 scenarios representing each domain.
+The main finding we are planning to replicate are the three, 2 (intent) x 2 (domain) ANOVAs comparing the importance of intent for harm vs. incest, incest vs. ingestion, and harm vs. ingestion.
+Through the analysis, the authors found an intent by domain interaction when comparing the harm violations to the purity violations, but not the two purity violations to one another.
+
+**Repo Link:** <https://github.com/ucsd-psych201a/young2011>
+
+**Original Paper Link:** <https://github.com/ucsd-psych201a/young2011/tree/main/original_paper>
+
+## Methods
+
+### Power Analysis
+
+Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.
+Considerations of feasibility for selecting planned sample size.
+
+### Planned Sample
+
+We can replicate the sample size from the paper and target \~262 participants.
+We will screen out repeat participants through the same exclusion rules as the original paper - people who have taken a similar survey before and repeat prolific IDs.
+
+### Materials
+
+Below is the text for the scenarios participants will be prompted with.
+This follows the original paper exactly.
+
+"Harm
+
+Allergy - Intentional: Imagine your cousin is over for dinner.
+You know she is allergic to peanuts.
+You decide to add peanuts to the dish because they really bring out the flavor for you.
+You grind up the peanuts, add them in, and serve your cousin.
+
+Allergy - Accidental: Imagine your cousin is over for dinner.
+You have no idea she is allergic to peanuts.
+You decide to add peanuts to the dish because they really bring out the flavor for you.
+You grind up the peanuts, add them in, and serve your cousin.
+
+Poison - Intentional: Imagine you and a co-worker are taking a tour of a chemical plant.
+During the coffee break, you go to pour some coffee.
+You like yours black, but your co-worker asks for sugar in hers.
+You spoon some powder into your co-worker’s coffee.
+You know full well that you are putting poison in her coffee.
+
+Poison - Accidental: Imagine you and a co-worker are taking a tour of a chemical plant.
+During the coffee break, you go to pour some coffee.
+You like yours black, but your co-worker asks for sugar in hers.
+You spoon some powder into your co-worker’s coffee.
+You do not know that someone replaced the sugar with poison.
+
+Incest
+
+Sibling - Intentional: Imagine you are at a dorm party and really hit it off with someone.
+This person feels the same way about you.
+That night, you end up talking, and you discover that you are actually long lost siblings.
+At the end of the night, you decide to sleep together (using two forms of birth control to be safe).
+
+Sibling - Accidental: Imagine you are at a dorm party and really hit it off with someone.
+This person feels the same way about you.
+At the end of the night, you decide to sleep together (using two forms of birth control to be safe).
+The next day, you end up talking, and you discover that you are actually long lost siblings.
+
+Parent - Intentional: Imagine you were adopted at birth - you have never met your birth parents.
+The weekend of your college reunion, you go to your school’s football game and meet someone a bit older.
+You discover that this person is actually your biological parent.
+You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).
+
+Parent - Accidental: Imagine you were adopted at birth - you have never met your birth parents.
+The weekend of your college reunion, you go to your school’s football game and meet someone a bit older.
+You have no idea that this person is actually your biological parent.
+You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).
+
+Ingestion
+
+Dog - Intentional: Imagine that a car just killed your beloved dog.
+Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad.
+Later, you decide to make yourself dinner.
+You see a package in the freezer.
+It is correctly labeled “dog”.
+You end up eating your dog for dinner.
+
+Dog - Accidental: Imagine that a car just killed your beloved dog.
+Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad.
+Later, you decide to make yourself dinner.
+You see a package in the freezer.
+It is incorrectly labeled “beef” – but it is actually the meat from your dog.
+Without realizing it, you end up eating your dog for dinner.
+
+Urine - Intentional: Imagine that you are waiting to brush your teeth while your friend is in the bathroom.
+As she leaves, you notice a cup and a pregnancy test.
+Your friend warns you that the cup contains her urine for her pregnancy test.
+You finish brushing your teeth and use that cup to rinse out your mouth.
+
+Urine – Accidental: Imagine that you are waiting to brush your teeth while your friend is in the bathroom.
+As she leaves, you notice a cup and a pregnancy test.
+Your friend forgets to tell you that the cup contains her urine for her pregnancy test.
+You finish brushing your teeth and use that cup to rinse out your mouth.
+"
+
+### Procedure
+
+We will follow the procedure exactly as described in the original paper.
+"Participants were assigned randomly to one of six conditions in a 2 (intentional versus accidental) 3 (harm versus incest versus ingestion) between-subjects experimental design. Participants then judged the moral wrongness of the action \[through the question “How morally wrong was the action?”\], on a 7-point scale anchored at ‘‘not at all morally wrong’’ (1) to ‘‘very morally wrong’’ (7). Two scenarios represented each domain: harm (allergy, poison), incest (parent, sibling) or ingestion (dog meat, urine). There were two versions of each scenario (intentional, accidental); each participant saw only one version."
+
+### Analysis Plan
+
+The analysis will follow the original paper exactly.
+We will first screen out repeat participants through the same exclusion rules as the original paper - people who have taken a similar survey before and repeat prolific IDs.
+We will then run three, 2 (intent) x 2 (domain) ANOVAs comparing harm vs. incest, harm vs. ingestion, and incest vs. ingestion.
+The analysis will be collapsed across the 2 scenarios in each domain, as done in the original paper.
+For the 2 main effects and the interaction, we'll report the F-stat, p value, and partial eta squared.
+We will be looking to confirm the intent by domain interaction is significant when comparing the harm violations vs. purity violations, and not significant when comparing the two purity violations.
+
+### Differences from Original Study
+
+The only differences I expect are from the fact that we're using a different set of participants (different platform - prolific vs. mturk, small differences in final participant count) and the date we're running the study (late 2000s vs. 2024).
+In case general perspectives on any of these domains have shifted over time, we could see a change in the results; however, I do not anticipate this to be the case.
+
+### Methods Addendum (Post Data Collection)
+
+<!-- You can comment this section out prior to final report with data collection. -->
+
+#### Actual Sample
+
+<!-- Sample size, demographics, data exclusions based on rules spelled out in analysis plan -->
+
+#### Differences from pre-data collection methods plan
+
+<!-- Any differences from what was described as the original plan, or “none”. -->
+
+## Results
+
+### Data preparation
+
+Data preparation following the analysis plan.
+
+```{r include=F}
+### Data Preparation
+
+# #### Load Relevant Libraries and Functions
+# install.packages("pacman", repos = "http://cran.us.r-project.org")
+# pacman::p_load(dplyr,tidyverse,ggplot2,lubridate,stringr,kableExtra, scales)
+# 
+# #### Import data; load data from csv
+# raw_data <- read.csv("path_to_csv_here")
+# 
+# #### Data exclusion / filtering
+# 
+# #remove any participants who say they have take a similar test before
+# cleaned_data <- cleaned_data %>% filter(seen_study_before == "No")
+# 
+# #remove any duplicate prolfic ids
+# cleaned_data <- cleaned_data %>% distinct(prolific_id, .keep_all = TRUE)
+
+#### Prepare data for analysis - create columns etc.
+
+#create columns for scenario (allergy, poison, sibling incest, parent incest, eating dog, drinking urine), intent (intentional versus accidental), domain (harm versus incest versus ingestion), and violation type (harm vs. purity)
+
+#convert moral_wrongness column to integer for analysis
+
+#create subset dataframe for comparing harm vs. incest (filter domain column)
+
+#create subset dataframe for comparing harm vs. ingestion (filter domain column)
+
+#create subset dataframe for comparing incest vs. ingestion (filter domain column)
+
+```
+
+### Confirmatory analysis
+
+The analyses as specified in the analysis plan.
+
+*Side-by-side graph with original graph is ideal here*
+
+```{r}
+
+# #calculate aov comparing harm vs. incest
+# anova_result_harm_incest <- aov(moral_wrongness ~ intent * domain, data = dataframe_harm_incest)
+# print(summary(anova_result_harm_incest))
+# 
+# #calculate aov comparing harm vs. ingestion
+# anova_result_harm_igestion <- aov(moral_wrongness ~ intent * domain, data = dataframe_harm_ingestion)
+# print(summary(anova_result_harm_igestion))
+# 
+# #calculate aov comparing incest vs. ingestion
+# anova_result_incest_ingestion <- aov(moral_wrongness ~ intent * domain, data = dataframe_incest_ingestion)
+# print(summary(anova_result_incest_ingestion))
+# 
+# ## create bar graph in fig 2
+# #calculate mean and standard error for moral_wrongness by scenario and intent
+# df_summary <- df %>%
+#   group_by(scenario, intent) %>%
+#   summarize(
+#     mean_moral_wrongness = mean(moral_wrongness),
+#     se_moral_wrongness = sd(moral_wrongness) / sqrt(n())
+#   )
+# 
+# #add violation type to summary data frame
+# df_summary <- df_summary %>% mutate(violation_type = 
+#               case_when(
+#                 scenario = "allergy" ~ "harm",
+#                 scenario = "poison" ~ "harm",
+#                 scenario = "sibling_incest" ~ "purity",
+#                 scenario = "parent_incest" ~ "purity",
+#                 scenario = "eating_dog" ~ "purity",
+#                 scenario = "drinking_urine" ~ "purity"                
+#               ))
+# 
+# #create plot
+# ggplot(df_summary, aes(x = scenario, y = mean_moral_wrongness, fill = violation_type, label = scenario)) +
+#   geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+#   geom_errorbar(aes(ymin = mean_moral_wrongness - se_moral_wrongness, ymax = mean_moral_wrongness + se_moral_wrongness),
+#                 width = 0.2, position = position_dodge(width = 0.8)) +
+#   facet_wrap(~intent, scales = "free_x") + #split intentional vs. accidental
+#   geom_text(aes(y = mean_moral_wrongness, label = scenario), vjust = -0.5, color = "white") + # Text labels
+#   scale_fill_manual(values = c("allergy" = "gray", "poison" = "gray", "sibling_incest" = "black", "parent_incest" = "black", "eating_dog" = "black", "drinking_urine" = "black")) + # Color mapping
+#   labs(x = "Scenario", y = "Morality Rating (1 (Not at all morally wrong) - 7 (very morally wrong))", title = "Experiment 1: Intentional vs. Accidental") +
+#   theme_minimal()
+
+```
+
+### Exploratory analyses
+
+Any follow-up analyses desired (not required).
+
+## Discussion
+
+### Summary of Replication Attempt
+
+Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.
+
+### Commentary
+
+Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.
+None of these need to be long.
