@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>experiment</title>
+    <script src="https://unpkg.com/jspsych@8.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-audio-keyboard-response@2.0.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-fullscreen@1.2.1"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-likert@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey@1.0.1"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-multi-choice@1.1.3"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+
+    <link href="https://unpkg.com/jspsych@8.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+</body>
+<script>
+
+
+    // initialize jsPsych
+    var jsPsych = initJsPsych(
+        {
+            on_finish: function () {
+                jsPsych.data.displayData();
+            }
+        }
+    );
+
+    // generate a random subject ID with 15 characters
+
+    const subject_id = jsPsych.randomization.randomID(10);
+    const filename = `${subject_id}.csv`;
+            
+
+
+
+    var condition_number = [1, 2]
+
+    // record the condition assignment in the jsPsych data
+
+
+    var timeline = [];
+
+    var welcome = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: "Welcome to the experiment. Press any key to begin."
+    };
+
+    // add the welcome trial to the timeline variable
+    timeline.push(welcome);
+
+
+    var textsaccidental = [
+        "Imagine your cousin is over for dinner. You <strong>have no idea</strong> she is allergic to peanuts. You decide to add peanuts to the dish because they really bring out the flavor for you. You grind up the peanuts, add them in, and serve your cousin.",
+        "Imagine you and a co-worker are taking a tour of a chemical plant. During the coffee break, you go to pour some coffee. You like yours black, but your co-worker asks for sugar in hers. You spoon some powder into your co-worker’s coffee. <strong>You do not know that someone replaced the sugar with poison.</strong>",
+        "Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. At the end of the night, you decide to sleep together (using two forms of birth control to be safe). <strong>The next day, you end up talking, and you discover that you are actually long lost siblings.</strong>",
+        "Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school’s football game and meet someone a bit older. You <strong>have no idea</strong> that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).",
+        "Imagine that a car just killed your beloved dog. Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad. Later, you decide to make yourself dinner. You see a package in the freezer. It is <strong>incorrectly labeled “beef” – but it is actually the meat from your dog. Without realizing it</strong>, you end up eating your dog for dinner.",
+        "Imagine that you are waiting to brush your teeth while your friend is in the bathroom. As she leaves, you notice a cup and a pregnancy test. Your friend <strong>forgets to tell you</strong> that the cup contains her urine for her pregnancy test. You finish brushing your teeth and use that cup to rinse out your mouth."
+    ];
+
+
+    var textspurposeful = [
+        "Imagine your cousin is over for dinner. You <strong>know</strong> she is allergic to peanuts. You decide to add peanuts to the dish because they really bring out the flavor for you. You grind up the peanuts, add them in, and serve your cousin.",
+        "Imagine you and a co-worker are taking a tour of a chemical plant. During the coffee break, you go to pour some coffee. You like yours black, but your co-worker asks for sugar in hers. You spoon some powder into your co-worker’s coffee. <strong>You know full well that you are putting poison in her coffee.</strong>",
+        "Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. <strong>That night, you end up talking, and you discover that you are actually long lost siblings.</strong> At the end of the night, you decide to sleep together (using two forms of birth control to be safe).",
+        "Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school’s football game and meet someone a bit older. You <strong>discover</strong> that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).",
+        "Imagine that a car just killed your beloved dog. Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad. Later, you decide to make yourself dinner. You see a package in the freezer. It is <strong>correctly labeled “dog”</strong>. You end up eating your dog for dinner.",
+        "Imagine that you are waiting to brush your teeth while your friend is in the bathroom. As she leaves, you notice a cup and a pregnancy test. Your friend <strong>warns</strong> you that the cup contains her urine for her pregnancy test. You finish brushing your teeth and use that cup to rinse out your mouth.",
+    ];
+
+
+
+    // pick a random condition for the subject at the start of the experiment
+    var condition_assignment = jsPsych.randomization.sampleWithoutReplacement(condition_number, 1)[0];
+
+    // this adds a property called 'subject' and a property called 'condition' to every trial
+    jsPsych.data.addProperties({
+        subject: subject_id,
+        condition: condition_assignment
+    });
+
+    if (condition_assignment == 1) {
+        stimulus_text = jsPsych.randomization.sampleWithoutReplacement(textsaccidental, 6);
+    }
+    else {
+        stimulus_text = jsPsych.randomization.sampleWithoutReplacement(textspurposeful, 6);
+
+    }
+
+
+
+
+
+    // Scenario
+    var scenarioDisplay1 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style="max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;">
+        ${stimulus_text[0]}
+           </div>
+        </p>
+             `
+    };
+
+    var scenarioDisplay2 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style="max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;">
+        ${stimulus_text[1]}
+           </div>
+        </p>
+             `
+    };
+
+    var scenarioDisplay3 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style="max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;">
+        ${stimulus_text[2]}
+           </div>
+        </p>
+             `
+    };
+
+    var scenarioDisplay4 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style="max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;">
+        ${stimulus_text[3]}
+           </div>
+        </p>
+             `
+    };
+
+    var scenarioDisplay5 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style="max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;">
+        ${stimulus_text[4]}
+           </div>
+        </p>
+             `
+    };
+
+    var scenarioDisplay6 = {
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style="max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;">
+        ${stimulus_text[5]}
+           </div>
+        </p>
+             `
+    };
+
+    // Define the Likert scale question with a separate prompt
+
+    var scale = ["1 - Not morally wrong at all", "2", "3", "4", "5", "6", "7-very morally wrong"];
+
+    var likertQuestion = {
+        type: jsPsychSurveyLikert,
+        questions: [
+            {
+                prompt: "How morally wrong was the action in the scenario?",
+                labels: scale,
+                required: true
+            }
+        ],
+        randomize_question_order: false
+    };
+
+    var takenSurveyBeforeQuestion = {
+        type: jsPsychSurveyMultiChoice,
+        questions: [
+            {
+                prompt: "Have you responded to a survey on this topic before?",
+                name: 'TakenSurveyBefore',
+                options: ["Yes", "No", "Unsure"],
+                required: true
+            }
+        ],
+    };
+
+    var takenSurveyAfterQuestion = {
+        type: jsPsychSurveyMultiChoice,
+        questions: [
+            {
+                prompt: "Have you responded to a survey on this topic before?",
+                name: 'TakenSurveyBefore',
+                options: ["Yes", "No", "Unsure"],
+                required: true
+            }
+        ],
+    };
+<<<<<<< HEAD
+=======
+    timeline.push(takenSurveyBeforeQuestion, scenarioDisplay1, likertQuestion, scenarioDisplay2, likertQuestion, scenarioDisplay3, likertQuestion, scenarioDisplay4, likertQuestion, scenarioDisplay5, likertQuestion, scenarioDisplay6, likertQuestion, takenSurveyAfterQuestion);
+>>>>>>> 8ea9acd873e61d3372f634027a3c304dc3241f9d
+
+    const save_data = {
+                type: jsPsychPipe,
+                action: "save",
+                experiment_id: "oFwXu5cBjEnC",
+                filename: filename,
+                data_string: ()=>jsPsych.data.get().csv()
+              };
+
+    timeline.push(takenSurveyBeforeQuestion, scenarioDisplay1, likertQuestion, scenarioDisplay2, likertQuestion, scenarioDisplay3, likertQuestion, scenarioDisplay4, likertQuestion, scenarioDisplay5, likertQuestion, scenarioDisplay6, likertQuestion, takenSurveyAfterQuestion,save_data);
+
+
+    
+    // start the experiment
+    jsPsych.run(timeline);
+
+</script>
+
+</html>
