@@ -147,6 +147,47 @@ In case general perspectives on any of these domains have shifted over time, we 
 
 <!-- Any differences from what was described as the original plan, or “none”. -->
 
+## Design Overview
+
+-   How many factors were manipulated?
+
+    -   2 - intent and domain
+
+-   How many measures were taken?
+
+    -    1 - perceptions of moral wrongfulness of the action
+
+-   Did it use a within-participants or between-participants design?
+
+    -   Between participants
+
+-   Were measures repeated?
+
+    -   No
+
+-   What would have been the consequence of changing one of these decisions?
+    (e.g. moving from within to between participants).
+    Could it have been either way?
+
+    -   They could have done a within participants study; however, it would have enlightened the participants to what the manipulation was and possibly have biased participants' responses.
+
+-   Were steps taken to reduce demand characteristics?
+
+    -   Only having 1 question per scenario reduces demand characteristics as it's unclear what the researcher is trying to get at.
+
+-   How would you critique the design?
+
+    -   Can you think of any potential confounds to the study?
+
+        -   It is possible that wtih the accidental purity violations, participants' do not actually believe the action was an accident (e.g., how can you not realize that you're eating dog instead of beef, or drinking urine instead of water?).
+            So it would be interesting to test whether with accidental harm violations people actually believe it was an accident more than with accidental purity violations.
+
+    -   Do you see any limitations to generalizability?
+
+        -   The study chose very specific scenarios of harm vs. purity violations.
+            It's unclear whether these findings would generate to other purity violations.
+            For example, adultery is considered to be a purity violation in psychology, but I believe people would judge accidental adultery differently from purposeful adultery.
+
 ## Results
 
 ### Data preparation
