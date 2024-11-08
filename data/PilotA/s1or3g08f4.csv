@@ -1,0 +1,46 @@
+"rt","stimulus","response","trial_type","trial_index","plugin_version","time_elapsed","subject","condition","question_order"
+"4015","Welcome to the experiment. Press any key to begin."," ","html-keyboard-response","0","2.0.0","4018","s1or3g08f4","2",""
+"33576","","{""TakenSurveyBefore"":""Yes""}","survey-multi-choice","1","null","37597","s1or3g08f4","2","[0]"
+"3019","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine that you are waiting to brush your teeth while your friend is in the bathroom. As she leaves, you notice a cup and a pregnancy test. Your friend <strong>warns</strong> you that the cup contains her urine for her pregnancy test. You finish brushing your teeth and use that cup to rinse out your mouth.
+           </div>
+        </p>
+             "," ","html-keyboard-response","2","2.0.0","40618","s1or3g08f4","2",""
+"2889","","{""Q0"":2}","survey-likert","3","null","43509","s1or3g08f4","2","[0]"
+"907","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine that a car just killed your beloved dog. Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad. Later, you decide to make yourself dinner. You see a package in the freezer. It is <strong>correctly labeled “dog”</strong>. You end up eating your dog for dinner.
+           </div>
+        </p>
+             "," ","html-keyboard-response","4","2.0.0","44417","s1or3g08f4","2",""
+"1658","","{""Q0"":2}","survey-likert","5","null","46077","s1or3g08f4","2","[0]"
+"738","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school’s football game and meet someone a bit older. You <strong>discover</strong> that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).
+           </div>
+        </p>
+             "," ","html-keyboard-response","6","2.0.0","46817","s1or3g08f4","2",""
+"2218","","{""Q0"":2}","survey-likert","7","null","49037","s1or3g08f4","2","[0]"
+"677","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. <strong>That night, you end up talking, and you discover that you are actually long lost siblings.</strong> At the end of the night, you decide to sleep together (using two forms of birth control to be safe).
+           </div>
+        </p>
+             "," ","html-keyboard-response","8","2.0.0","49716","s1or3g08f4","2",""
+"1688","","{""Q0"":3}","survey-likert","9","null","51405","s1or3g08f4","2","[0]"
+"652","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine your cousin is over for dinner. You <strong>know</strong> she is allergic to peanuts. You decide to add peanuts to the dish because they really bring out the flavor for you. You grind up the peanuts, add them in, and serve your cousin.
+           </div>
+        </p>
+             "," ","html-keyboard-response","10","2.0.0","52059","s1or3g08f4","2",""
+"1870","","{""Q0"":3}","survey-likert","11","null","53931","s1or3g08f4","2","[0]"
+"954","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine you and a co-worker are taking a tour of a chemical plant. During the coffee break, you go to pour some coffee. You like yours black, but your co-worker asks for sugar in hers. You spoon some powder into your co-worker’s coffee. <strong>You know full well that you are putting poison in her coffee.</strong>
+           </div>
+        </p>
+             "," ","html-keyboard-response","12","2.0.0","54887","s1or3g08f4","2",""
+"2186","","{""Q0"":4}","survey-likert","13","null","57075","s1or3g08f4","2","[0]"
+"1749","","{""TakenSurveyBefore"":""No""}","survey-multi-choice","14","null","58826","s1or3g08f4","2","[0]"
