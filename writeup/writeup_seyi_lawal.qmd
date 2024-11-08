@@ -30,13 +30,14 @@ Through the analysis, the authors found an intent by domain interaction when com
 
 ### Power Analysis
 
-Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.
-Considerations of feasibility for selecting planned sample size.
+The effect size of the main result in the paper (the intent by domain interaction) was 0.15.
+Given there are 2 groups, 1 degree of freedom, and we're targeting p \< 0.05, We need a sample size of 351 to have 80% power, 469 to have 90% power, and 580 to have 95% power.
+For this study, we'll target 80% power.
 
 ### Planned Sample
 
-We can replicate the sample size from the paper and target \~262 participants.
 We will screen out repeat participants through the same exclusion rules as the original paper - people who have taken a similar survey before and repeat prolific IDs.
+We will target 375 participants to have 80% power to detect the main interaction effect in the paper, understanding that some may drop given the exculsion criteria above.
 
 ### Materials
 
@@ -155,7 +156,7 @@ In case general perspectives on any of these domains have shifted over time, we 
 
 -   How many measures were taken?
 
-    -    1 - perceptions of moral wrongfulness of the action
+    -   1 - perceptions of moral wrongfulness of the action
 
 -   Did it use a within-participants or between-participants design?
 
@@ -179,14 +180,11 @@ In case general perspectives on any of these domains have shifted over time, we 
 
     -   Can you think of any potential confounds to the study?
 
-        -   It is possible that wtih the accidental purity violations, participants' do not actually believe the action was an accident (e.g., how can you not realize that you're eating dog instead of beef, or drinking urine instead of water?).
-            So it would be interesting to test whether with accidental harm violations people actually believe it was an accident more than with accidental purity violations.
+        -   It is possible that wtih the accidental purity violations, participants' do not actually believe the action was an accident (e.g., how can you not realize that you're eating dog instead of beef, or drinking urine instead of water?). So it would be interesting to test whether with accidental harm violations people actually believe it was an accident more than with accidental purity violations.
 
     -   Do you see any limitations to generalizability?
 
-        -   The study chose very specific scenarios of harm vs. purity violations.
-            It's unclear whether these findings would generate to other purity violations.
-            For example, adultery is considered to be a purity violation in psychology, but I believe people would judge accidental adultery differently from purposeful adultery.
+        -   The study chose very specific scenarios of harm vs. purity violations. It's unclear whether these findings would generate to other purity violations. For example, adultery is considered to be a purity violation in psychology, but I believe people would judge accidental adultery differently from purposeful adultery.
 
 ## Results
 
@@ -197,32 +195,107 @@ Data preparation following the analysis plan.
 ```{r include=F}
 ### Data Preparation
 
-# #### Load Relevant Libraries and Functions
-# install.packages("pacman", repos = "http://cran.us.r-project.org")
-# pacman::p_load(dplyr,tidyverse,ggplot2,lubridate,stringr,kableExtra, scales)
-# 
-# #### Import data; load data from csv
-# raw_data <- read.csv("path_to_csv_here")
-# 
+#### Load Relevant Libraries and Functions
+install.packages("pacman", repos = "http://cran.us.r-project.org")
+pacman::p_load(dplyr,tidyverse,ggplot2,lubridate,stringr,kableExtra, scales)
+
+#### Import data; load data from csv
+csv_files <- list.files(path = "~/Coursework/Fall 2024/PSYC 201A/young2011/data/PilotA", pattern = "\\.csv$", full.names = TRUE)
+
+raw_data <- csv_files %>% map_dfr(read_csv)
+
 # #### Data exclusion / filtering
-# 
-# #remove any participants who say they have take a similar test before
-# cleaned_data <- cleaned_data %>% filter(seen_study_before == "No")
-# 
+
+## add scenario to response row; then, remove html response rows
+cleaned_data <- raw_data %>%
+  mutate(
+    stimulus = case_when(
+      trial_type == "survey-likert" ~ lag(stimulus),
+      TRUE ~ stimulus  # Keep the original value if the condition is not met
+    )
+  )
+
+
+cleaned_data <- raw_data %>% filter(trial_type != "html-keyboard-response")
+
+#remove any participants who say they have take a similar test before
+participants_who_have_taken_survey <- cleaned_data %>%
+  filter(response == "{\"TakenSurveyBefore\":\"Yes\"}") %>%
+  distinct(subject) %>%
+  select(subject)
+
+ cleaned_data <- cleaned_data %>% 
+   anti_join(participants_who_have_taken_survey, by = "subject")
+
+ 
 # #remove any duplicate prolfic ids
 # cleaned_data <- cleaned_data %>% distinct(prolific_id, .keep_all = TRUE)
 
 #### Prepare data for analysis - create columns etc.
 
 #create columns for scenario (allergy, poison, sibling incest, parent incest, eating dog, drinking urine), intent (intentional versus accidental), domain (harm versus incest versus ingestion), and violation type (harm vs. purity)
+cleaned_data <- cleaned_data %>% mutate(
+ scenario = case_when(
+   str_detect(stimulus, "You <strong>have no idea</strong> she is allergic to peanuts") ~ "allergy",
+   str_detect(stimulus, "<strong>You do not know that someone replaced the sugar with poison.</strong>") ~ "poison",
+   str_detect(stimulus, "<strong>The next day, you end up talking, and you discover that you are actually long lost siblings.</strong>") ~ "sibling_incest",
+   str_detect(stimulus, "You <strong>have no idea</strong> that this person is actually your biological parent") ~ "parent_incest",
+   str_detect(stimulus, "It is <strong>incorrectly labeled “beef”") ~ "eating_dog",
+   str_detect(stimulus, "Your friend <strong>forgets to tell you</strong> that the cup contains her urine for her pregnancy test.") ~ "drinking_urine",
+   str_detect(stimulus, "You <strong>know</strong> she is allergic to peanuts.") ~ "allergy",
+   str_detect(stimulus, "<strong>You know full well that you are putting poison in her coffee.</strong>") ~ "poison",
+   str_detect(stimulus, "That night, you end up talking, and you discover that you are actually long lost siblings.") ~ "sibling_incest",
+   str_detect(stimulus, "You <strong>discover</strong> that this person is actually your biological parent") ~ "parent_incest",
+   str_detect(stimulus, "It is <strong>correctly labeled “dog”</strong>.") ~ "eating_dog",
+   str_detect(stimulus, "Your friend <strong>warns</strong> you that the cup contains her urine for her pregnancy test") ~ "drinking_urine"
+   
+ ) 
+)
+ 
+cleaned_data <- cleaned_data %>% mutate(
+  domain = case_when(
+    scenario == "allergy" ~ "harm",
+    scenario == "poison" ~ "harm",
+    scenario == "sibling_incest" ~ "incest",
+    scenario == "parent_incest" ~ "incest",
+    scenario == "eating_dog" ~ "ingestion",
+    scenario == "drinking_urine" ~ "ingestion"
+  ))
+  
+cleaned_data <- cleaned_data %>% mutate(
+  violation_type = case_when(
+    domain == "harm" ~ "harm",
+    domain == "incest" ~ "purity",
+    domain == "ingestion" ~ "purity"
+  )
+  
+) 
 
-#convert moral_wrongness column to integer for analysis
+cleaned_data <- cleaned_data %>% mutate(
+  intent = case_when(
+    condition == "1" ~ "accidental",
+    condition == "2" ~ "intentional"
+  )
+)
+
+cleaned_data <- cleaned_data %>% filter (trial_type != "survey-multi-choice")
+
+cleaned_data <- cleaned_data %>% mutate(
+  moral_wrongness = as.numeric(str_sub(response, 7, 7))
+)
 
 #create subset dataframe for comparing harm vs. incest (filter domain column)
 
+dataframe_harm_incest <- cleaned_data %>% filter(domain == "harm" | domain == "incest")
+
 #create subset dataframe for comparing harm vs. ingestion (filter domain column)
 
+dataframe_harm_ingestion <- cleaned_data %>% filter(domain == "harm" | domain == "ingestion")
+
 #create subset dataframe for comparing incest vs. ingestion (filter domain column)
+
+dataframe_incest_ingestion <- cleaned_data %>% filter(domain == "incest" | domain == "ingestion")
+
 
 ```
 
@@ -232,50 +305,56 @@ The analyses as specified in the analysis plan.
 
 *Side-by-side graph with original graph is ideal here*
 
-```{r}
+```{r, fig.width = 15}
 
-# #calculate aov comparing harm vs. incest
-# anova_result_harm_incest <- aov(moral_wrongness ~ intent * domain, data = dataframe_harm_incest)
-# print(summary(anova_result_harm_incest))
-# 
-# #calculate aov comparing harm vs. ingestion
-# anova_result_harm_igestion <- aov(moral_wrongness ~ intent * domain, data = dataframe_harm_ingestion)
-# print(summary(anova_result_harm_igestion))
-# 
-# #calculate aov comparing incest vs. ingestion
-# anova_result_incest_ingestion <- aov(moral_wrongness ~ intent * domain, data = dataframe_incest_ingestion)
-# print(summary(anova_result_incest_ingestion))
-# 
-# ## create bar graph in fig 2
-# #calculate mean and standard error for moral_wrongness by scenario and intent
-# df_summary <- df %>%
-#   group_by(scenario, intent) %>%
-#   summarize(
-#     mean_moral_wrongness = mean(moral_wrongness),
-#     se_moral_wrongness = sd(moral_wrongness) / sqrt(n())
-#   )
-# 
-# #add violation type to summary data frame
-# df_summary <- df_summary %>% mutate(violation_type = 
-#               case_when(
-#                 scenario = "allergy" ~ "harm",
-#                 scenario = "poison" ~ "harm",
-#                 scenario = "sibling_incest" ~ "purity",
-#                 scenario = "parent_incest" ~ "purity",
-#                 scenario = "eating_dog" ~ "purity",
-#                 scenario = "drinking_urine" ~ "purity"                
-#               ))
-# 
-# #create plot
-# ggplot(df_summary, aes(x = scenario, y = mean_moral_wrongness, fill = violation_type, label = scenario)) +
-#   geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
-#   geom_errorbar(aes(ymin = mean_moral_wrongness - se_moral_wrongness, ymax = mean_moral_wrongness + se_moral_wrongness),
-#                 width = 0.2, position = position_dodge(width = 0.8)) +
-#   facet_wrap(~intent, scales = "free_x") + #split intentional vs. accidental
-#   geom_text(aes(y = mean_moral_wrongness, label = scenario), vjust = -0.5, color = "white") + # Text labels
-#   scale_fill_manual(values = c("allergy" = "gray", "poison" = "gray", "sibling_incest" = "black", "parent_incest" = "black", "eating_dog" = "black", "drinking_urine" = "black")) + # Color mapping
-#   labs(x = "Scenario", y = "Morality Rating (1 (Not at all morally wrong) - 7 (very morally wrong))", title = "Experiment 1: Intentional vs. Accidental") +
-#   theme_minimal()
+#calculate aov comparing harm vs. incest
+cat("\n AOV comparing harm vs. incest")
+anova_result_harm_incest <- aov(moral_wrongness ~ intent * domain, data = dataframe_harm_incest)
+print(summary(anova_result_harm_incest))
+
+#calculate aov comparing harm vs. ingestion
+cat("\n AOV comparing harm vs. ingestion")
+anova_result_harm_igestion <- aov(moral_wrongness ~ intent * domain, data = dataframe_harm_ingestion)
+print(summary(anova_result_harm_igestion))
+
+#calculate aov comparing incest vs. ingestion
+cat("\n AOV comparing incest vs. ingestion")
+anova_result_incest_ingestion <- aov(moral_wrongness ~ intent * domain, data = dataframe_incest_ingestion)
+print(summary(anova_result_incest_ingestion))
+
+## create bar graph in fig 2
+#calculate mean and standard error for moral_wrongness by scenario and intent
+df_summary <- cleaned_data %>%
+  group_by(scenario, intent) %>%
+  summarize(
+    mean_moral_wrongness = mean(moral_wrongness),
+    se_moral_wrongness = sd(moral_wrongness) / sqrt(n())
+  )
+
+#add violation type to summary data frame
+df_summary <- df_summary %>% mutate(violation_type =
+              case_when(
+                scenario == "allergy" ~ "harm",
+                scenario == "poison" ~ "harm",
+                scenario == "sibling_incest" ~ "purity",
+                scenario == "parent_incest" ~ "purity",
+                scenario == "eating_dog" ~ "purity",
+                scenario == "drinking_urine" ~ "purity"
+              ))
+
+#create plot
+ggplot(df_summary, aes(x = scenario, y = mean_moral_wrongness,label = scenario, fill = violation_type)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+  geom_errorbar(aes(ymin = mean_moral_wrongness - se_moral_wrongness, ymax = mean_moral_wrongness + se_moral_wrongness),
+                width = 0.2, position = position_dodge(width = 0.8)) +
+  facet_wrap(~intent, scales = "free_x") + #split intentional vs. accidenta
+  scale_fill_manual(values = c("harm" = "gray", "purity" = "black")) + # Color mapping
+  labs(x = "Scenario", y = "Morality Rating (1 (Not at all morally wrong) - 7 (very morally wrong))", title = "Experiment 1: Intentional vs. Accidental") +
+  theme_minimal() +
+    theme(
+    axis.text.x = element_text(size = 12),
+    axis.text.y = element_text(size = 12) 
+  )
 
 ```
 
