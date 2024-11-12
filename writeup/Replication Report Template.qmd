@@ -1,6 +1,6 @@
 ---
-title: "Replication of Study X by Sample & Sample (20xx, Psychological Science)"
-author: "Replication Author[s] (contact information)"
+title: "Replication of Study 1A by Liane Young and Rebecca Saxe (2011, Cognition)"
+author: "Replication Author[s] Belynda Herrera bpherrera@ucsd.edu"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 format:
   html:
@@ -14,34 +14,70 @@ format:
 
 [No abstract is needed.]  Each replication project will have a straightforward, no frills report of the study and results.  These reports will be publicly available as supplementary material for the aggregate report(s) of the project as a whole.  Also, to maximize project integrity, the intro and methods will be written and critiqued in advance of data collection.  Introductions can be just 1-2 paragraphs clarifying the main idea of the original study, the target finding for replication, and any other essential information.  It will NOT have a literature review -- that is in the original publication. You can write both the introduction and the methods in past tense.  
 
+**Original Paper Link:** <https://github.com/ucsd-psych201a/young2011/tree/main/original_paper>
 
 ## Methods
 
 ### Power Analysis
 
-Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
+This study employs Partial eta-squared (η²p) to quantify the effect size in our Analysis of Variance (ANOVA). Partial η²p represents the proportion of variance explained by a given factor when excluding other factors' effects. We will compute this measure to assess the practical significance of our findings.
 
 ### Planned Sample
 
-Planned sample size and/or termination rule, sampling frame, known demographics if any, preselection rules if any.
+To ensure methodological rigor, we will aim to recruit approximately 262 participants, aligning with the sample size utilized in the original study. Consistent with the established protocol, we will implement stringent exclusion criteria to maintain data quality. Specifically, we will exclude participants who report prior exposure to similar experimental paradigms and remove duplicate responses as identified through redundant Prolific IDs.
 
 ### Materials
 
-All materials - can quote directly from original article - just put the text in quotations and note that this was followed precisely.  Or, quote directly and just point out exceptions to what was described in the original article.
+Each participant made a moral judgment for a single scenario.
+Participants were assigned randomly to one of six conditions in a 2 (intentional versus accidental) × 3 (harm versus incest versus ingestion) between-subjects experimental design.
+Here are the materials to present to participants.
 
+**Harm**
+
+-   Allergy - Intentional: Imagine your cousin is over for dinner. You know she is allergic to peanuts. You decide to add peanuts to the dish because they really bring out the flavor for you. You grind up the peanuts, add them in, and serve your cousin.
+-   Allergy - Accidental: Imagine your cousin is over for dinner. You have no idea she is allergic to peanuts. You decide to add peanuts to the dish because they really bring out the flavor for you. You grind up the peanuts, add them in, and serve your cousin.
+-   Poison - Intentional: Imagine you and a co-worker are taking a tour of a chemical plant. During the coffee break, you go to pour some coffee. You like yours black, but your co-worker asks for sugar in hers. You spoon some powder into your co-worker's coffee. You know full well that you are putting poison in her coffee.
+-   Poison - Accidental: Imagine you and a co-worker are taking a tour of a chemical plant. During the coffee break, you go to pour some coffee. You like yours black, but your co-worker asks for sugar in hers. You spoon some powder into your co-worker's coffee. You do not know that someone replaced the sugar with poison.
+
+**Incest**
+
+-   Sibling - Intentional: Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. That night, you end up talking, and you discover that you are actually long lost siblings. At the end of the night, you decide to sleep together (using two forms of birth control to be safe).
+-   Sibling - Accidental: Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. At the end of the night, you decide to sleep together (using two forms of birth control to be safe). The next day, you end up talking, and you discover that you are actually long lost siblings.
+-   Parent - Intentional: Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school's football game and meet someone a bit older. You discover that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe). Parent - Accidental: Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school's football game and meet someone a bit older. You have no idea that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).
+
+**Ingestion**
+
+-   Dog - Intentional: Imagine that a car just killed your beloved dog. Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad. Later, you decide to make yourself dinner. You see a package in the freezer. It is correctly labeled "dog". You end up eating your dog for dinner.
+-   Dog - Accidental: Imagine that a car just killed your beloved dog. Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad. Later, you decide to make yourself dinner. You see a package in the freezer. It is incorrectly labeled "beef" -- but it is actually the meat from your dog. Without realizing it, you end up eating your dog for dinner.
+-   Urine - Intentional: Imagine that you are waiting to brush your teeth while your friend is in the bathroom. As she leaves, you notice a cup and a pregnancy test. Your friend warns you that the cup contains her urine for her pregnancy test. You finish brushing your teeth and use that cup to rinse out your mouth.
+-   Urine -- Accidental: Imagine that you are waiting to brush your teeth while your friend is in the bathroom. As she leaves, you notice a cup and a pregnancy test. Your friend forgets to tell you that the cup contains her urine for her pregnancy test. You finish brushing your teeth and use that cup to rinse out your mouth.
 ### Procedure	
 
-Can quote directly from original article - just put the text in quotations and note that this was followed precisely.  Or, quote directly and just point out exceptions to what was described in the original article.
+The experimental stimuli comprised moral scenarios spanning three domains: harm, incest, and ingestion. Each domain was represented by two distinct scenarios: harm (allergy and poison), incest (parent and sibling), and ingestion (dog meat consumption and urine ingestion). Participants evaluated the moral wrongness of actions depicted in these scenarios using a 7-point Likert scale, where 1 represented "not at all morally wrong" and 7 indicated "very morally wrong." To examine the role of intent, we manipulated scenario type between-subjects, with each participant randomly assigned to evaluate either intentional or accidental versions of the actions.
 
 ### Analysis Plan
 
-Can also quote directly, though it is less often spelled out effectively for an analysis strategy section.  The key is to report an analysis strategy that is as close to the original - data cleaning rules, data exclusion rules, covariates, etc. - as possible.  
+We will replicate Experiment 1A, excluding any repeat participants before analysis. Participants will rate moral wrongness on a 7-point scale.
+Our analysis will have two steps:
 
-**Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do.
+First, we'll check if participants judged the two scenarios within each domain (harm, incest, and ingestion) similarly using separate 2x2 ANOVAs.
+Then, if the scenarios within each domain don't differ significantly, we'll run our main analysis: three 2x2 ANOVAs comparing how intent affects judgments across different domain pairs:
+
+Harm vs. incest
+Harm vs. ingestion
+Incest vs. ingestion
+
+
+
+For any significant interactions, we'll use t-tests to examine specific patterns, following the original paper's approach. 
+
+
 
 ### Differences from Original Study
 
-Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study.  The goal, of course, is to minimize those differences, but differences will inevitably occur.  Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect.
+The only difference may arise from the different participant samples. Additionally, we collect data from two platforms (Prolific vs. MTurk), and participants on these platforms may have different characteristics.
+
+
 
 ### Methods Addendum (Post Data Collection)
 
@@ -55,28 +91,62 @@ You can comment this section out prior to final report with data collection.
 
 
 ## Results
+Error: subject
+          Df Sum Sq Mean Sq F value Pr(>F)  
+intent     1  45.00   45.00   31.15 0.0114 *
+Residuals  3   4.33    1.44                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Error: subject:domain
+              Df Sum Sq Mean Sq F value Pr(>F)
+domain         1  0.833  0.8333   0.459  0.547
+intent:domain  1  0.556  0.5556   0.306  0.619
+Residuals      3  5.444  1.8148               
+
+Error: Within
+          Df Sum Sq Mean Sq F value Pr(>F)
+Residuals 20  19.33  0.9667  
 
 
 ### Data preparation
 
 Data preparation following the analysis plan.
-	
-```{r include=F}
+
+```{r data preparation}
 ### Data Preparation
 
 #### Load Relevant Libraries and Functions
+#library(tidyr)
+#library(dplyr)
+#library(ggplot2)
+
 
 #### Import data
+#raw_data = read.csv("/data/data.csv")
 
 #### Data exclusion / filtering
 
+# exclude subs that took similar survey before
+# filetered_data = raw_data %>% 
+#  filter(is.na(TakeSurveyBefore))
+
+# exclude duplicated prolfic ids
+# cleaned_data = filetered_data %>% 
+#  distinct(prolific_id, .keep_all = TRUE)
+
 #### Prepare data for analysis - create columns etc.
-```
+
+# create columns for all variables in a dataframe from cleaned_data
+# convert wide data into long data for analysis and visualization
+
 
 ### Confirmatory analysis
 
-The analyses as specified in the analysis plan.  
-
+The present study aims to replicate Experiment 1A from the original investigation. Prior to statistical analyses, we will implement participant screening procedures to eliminate duplicate responses.
+The dependent measure consists of participants' moral judgments assessed on a 7-point Likert scale. Our analytical approach encompasses multiple stages. Initially, we will conduct three separate 2 (story) × 2 (intent) analyses of variance (ANOVAs) - one for each violation type (harm, incest, and ingestion) - to establish equivalence between the paired scenarios within each domain.
+Contingent upon replicating the original findings of no significant main effect of story and no story-by-intent interaction, we will proceed with the primary analyses: three 2 (intent) × 2 (domain) ANOVAs. These analyses will systematically examine the role of intent across domain pairs: (1) harm versus incest, (2) harm versus ingestion, and (3) incest versus ingestion. For cases yielding significant interaction effects, we will employ independent-samples t-tests to delineate specific patterns of differences, adhering to the analytical framework established in the original study.
+Based on the original findings, we hypothesize significant main effects for both intent and domain across all three ANOVAs. Moreover, we anticipate significant intent-by-domain interactions specifically in the comparisons involving harm (i.e., harm versus incest and harm versus ingestion), but not in the incest versus ingestion comparison. This pattern would support our central hypothesis that intent plays a more substantial role in moral judgments of harm compared to purity violations. Specifically, we predict that accidental harms will be judged less severely than accidental purity violations, despite comparable severity ratings for intentional violations across domains.
 *Side-by-side graph with original graph is ideal here*
 
 ### Exploratory analyses
