@@ -1,5 +1,5 @@
 ---
-title: "Replication of Study 1A by Liane Young ad Rebecca Saxe (2011, Cognition)"
+title: "Replication of Study 1A by Liane Young and Rebecca Saxe (2011, Cognition)"
 author: "Replication Author[s]: Seyi Lawal"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 format:
@@ -25,6 +25,8 @@ Through the analysis, the authors found an intent by domain interaction when com
 **Repo Link:** <https://github.com/ucsd-psych201a/young2011>
 
 **Original Paper Link:** <https://github.com/ucsd-psych201a/young2011/tree/main/original_paper>
+
+**OSF Paradigm Link:** <https://osf.io/6hy4r/> 
 
 ## Methods
 
@@ -216,7 +218,7 @@ cleaned_data <- raw_data %>%
   )
 
 
-cleaned_data <- raw_data %>% filter(trial_type != "html-keyboard-response")
+cleaned_data <- cleaned_data %>% filter(trial_type != "html-keyboard-response")
 
 #remove any participants who say they have take a similar test before
 participants_who_have_taken_survey <- cleaned_data %>%
