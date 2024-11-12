@@ -40,7 +40,8 @@ I will learn a lot.
 
 ### Power Analysis
 
-This paper uses Partial η² as a measure of effect size in ANOVA. We will calculate it as well.
+There are two groups and one degree of freedom. With a significance level of p ≤ 0.05 and an effect size of 0.8, we used G*Power to estimate that a sample size of 351 is needed to achieve 80% power.
+
 
 ### Planned Sample
 
@@ -65,7 +66,8 @@ Here are the materials to present to participants.
 
 -   Sibling - Intentional: Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. That night, you end up talking, and you discover that you are actually long lost siblings. At the end of the night, you decide to sleep together (using two forms of birth control to be safe).
 -   Sibling - Accidental: Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. At the end of the night, you decide to sleep together (using two forms of birth control to be safe). The next day, you end up talking, and you discover that you are actually long lost siblings.
--   Parent - Intentional: Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school's football game and meet someone a bit older. You discover that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe). Parent - Accidental: Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school's football game and meet someone a bit older. You have no idea that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).
+-   Parent - Intentional: Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school's football game and meet someone a bit older. You discover that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe). 
+-   Parent - Accidental: Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school's football game and meet someone a bit older. You have no idea that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).
 
 **Ingestion**
 
@@ -110,6 +112,45 @@ Sample size, demographics, data exclusions based on rules spelled out in analysi
 
 Any differences from what was described as the original plan, or "none".
 
+
+## Design Overview
+
+How many factors were manipulated?
+
+
+- Two factors were manipulated
+
+How many measures were taken?
+
+
+- Just one, the 7-point scale for moral judgement.
+
+Did it use a within-participants or between-participants design?
+
+
+- Between-subject design.
+
+Were measures repeated?
+
+
+- No.
+
+What would have been the consequence of changing one of these decisions? (e.g. moving from within to between participants). Could it have been either way?
+
+
+- If we switch from a between-subject design to a within-subject design, participants might anticipate that the experimenter expects them to behave differently in response to the different domain stories.
+
+Were steps taken to reduce demand characteristics?
+
+
+- We can conduct a double-blind study to help reduce demand characteristics.
+
+Can you think of any potential confounds to the study?
+
+
+- Education level could be a potential confound influencing moral judgment across different moral domains.
+
+
 ## Results
 
 ### Data preparation
@@ -120,28 +161,106 @@ Data preparation following the analysis plan.
 ### Data Preparation
 
 #### Load Relevant Libraries and Functions
-#library(tidyr)
-#library(dplyr)
-#library(ggplot2)
-
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+library(purrr)
+library(readr)
+library(stringr)
 
 #### Import data
-#raw_data = read.csv("/data/data.csv")
+
+csv_files <- list.files(path = "/Users/jiangkexin/Desktop/PSYC201A/young2011/data", pattern = "\\.csv$", full.names = TRUE)
+
+raw_data <- csv_files %>% 
+  map_dfr(read_csv)
 
 #### Data exclusion / filtering
+cleaned_data <- raw_data %>%
+  mutate(
+    stimulus = case_when(
+      trial_type == "survey-likert" ~ lag(stimulus),
+      TRUE ~ stimulus  
+    )
+  )
+
+cleaned_data <- cleaned_data %>% 
+  filter(trial_type != "html-keyboard-response")
 
 # exclude subs that took similar survey before
-# filetered_data = raw_data %>% 
-#  filter(is.na(TakeSurveyBefore))
+participants_who_have_taken_survey <- cleaned_data %>%
+  filter(response == "{\"TakenSurveyBefore\":\"Yes\"}") %>%
+  distinct(subject) %>%
+  select(subject)
 
-# exclude duplicated prolfic ids
-# cleaned_data = filetered_data %>% 
-#  distinct(prolific_id, .keep_all = TRUE)
+ cleaned_data <- cleaned_data %>% 
+   anti_join(participants_who_have_taken_survey, by = "subject")
 
 #### Prepare data for analysis - create columns etc.
 
 # create columns for all variables in a dataframe from cleaned_data
-# convert wide data into long data for analysis and visualization
+cleaned_data <- cleaned_data %>% mutate(
+ scenario = case_when(
+   str_detect(stimulus, "You <strong>have no idea</strong> she is allergic to peanuts") ~ "allergy",
+   str_detect(stimulus, "<strong>You do not know that someone replaced the sugar with poison.</strong>") ~ "poison",
+   str_detect(stimulus, "<strong>The next day, you end up talking, and you discover that you are actually long lost siblings.</strong>") ~ "sibling_incest",
+   str_detect(stimulus, "You <strong>have no idea</strong> that this person is actually your biological parent") ~ "parent_incest",
+   str_detect(stimulus, "It is <strong>incorrectly labeled “beef”") ~ "eating_dog",
+   str_detect(stimulus, "Your friend <strong>forgets to tell you</strong> that the cup contains her urine for her pregnancy test.") ~ "drinking_urine",
+   str_detect(stimulus, "You <strong>know</strong> she is allergic to peanuts.") ~ "allergy",
+   str_detect(stimulus, "<strong>You know full well that you are putting poison in her coffee.</strong>") ~ "poison",
+   str_detect(stimulus, "That night, you end up talking, and you discover that you are actually long lost siblings.") ~ "sibling_incest",
+   str_detect(stimulus, "You <strong>discover</strong> that this person is actually your biological parent") ~ "parent_incest",
+   str_detect(stimulus, "It is <strong>correctly labeled “dog”</strong>.") ~ "eating_dog",
+   str_detect(stimulus, "Your friend <strong>warns</strong> you that the cup contains her urine for her pregnancy test") ~ "drinking_urine"
+ ) 
+)
+ 
+
+cleaned_data <- cleaned_data %>%
+  mutate(domain = case_when(
+    scenario %in% c("allergy", "poison") ~ "harm",
+    scenario %in% c("sibling_incest", "parent_incest") ~ "incest",
+    scenario %in% c("eating_dog", "drinking_urine") ~ "ingestion",
+    TRUE ~ "unknown"
+  ))
+
+cleaned_data <- cleaned_data %>%
+  mutate(violation_type = case_when(
+    domain == "harm" ~ "harm",
+    domain == "incest" ~ "purity",
+    domain == "ingestion" ~ "purity",
+    TRUE ~ "unknown"
+  ))
+
+cleaned_data <- cleaned_data %>%
+  mutate(intent = case_when(
+    condition == "1" ~ "accidental",
+    condition == "2" ~ "intentional",
+    TRUE ~ "unknown"
+  ))
+
+cleaned_data <- cleaned_data %>%
+  filter(trial_type != "survey-multi-choice")
+
+cleaned_data <- cleaned_data %>% mutate(
+  moral_wrongness = as.numeric(str_sub(response, 7, 7))
+)
+ 
+#create subset dataframe for comparing harm vs. incest (filter domain column)
+
+dataframe_harm_incest <- cleaned_data %>% 
+  filter(domain == "harm" | domain == "incest")
+
+#create subset dataframe for comparing harm vs. ingestion (filter domain column)
+
+dataframe_harm_ingestion <- cleaned_data %>% 
+  filter(domain == "harm" | domain == "ingestion")
+
+#create subset dataframe for comparing incest vs. ingestion (filter domain column)
+
+dataframe_incest_ingestion <- cleaned_data %>% 
+  filter(domain == "incest" | domain == "ingestion")
 
 ```
 
@@ -164,6 +283,52 @@ If we replicate the original findings, we expect to see a significant main effec
 Ultimately, we aim to confirm that innocent intent plays a greater role in moral judgments of harm versus purity violations. Specifically, we anticipate that accidental harms will be judged as less morally wrong than accidental purity violations,though harms were not judged less morally wrong than purity violations in general.
 
 
+``` {r - confirmation analysis}
+cat("\n AOV comparing incest vs. ingestion")
+anova_result_incest_ingestion <- aov(moral_wrongness ~ intent * domain, data = dataframe_incest_ingestion)
+print(summary(anova_result_incest_ingestion))
+
+## create bar graph in fig 2
+#calculate mean and standard error for moral_wrongness by scenario and intent
+
+df_summary <- cleaned_data %>%
+  group_by(scenario, intent) %>%
+  summarize(
+    mean_moral_wrongness = mean(moral_wrongness, na.rm = TRUE),  # Avoid NAs in calculation
+    se_moral_wrongness = sd(moral_wrongness, na.rm = TRUE) / sqrt(n())  # Standard error
+  )
+
+# Map violation_type based on scenario
+violation_map <- c(
+  "allergy" = "harm",
+  "poison" = "harm",
+  "sibling_incest" = "purity",
+  "parent_incest" = "purity",
+  "eating_dog" = "purity",
+  "drinking_urine" = "purity"
+)
+
+df_summary <- df_summary %>%
+  mutate(violation_type = violation_map[scenario])  # Use violation_map to assign values
+
+
+#create plot
+ggplot(df_summary, aes(x = scenario, y = mean_moral_wrongness, fill = violation_type, label = scenario)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+  geom_errorbar(aes(ymin = mean_moral_wrongness - se_moral_wrongness, ymax = mean_moral_wrongness + se_moral_wrongness),
+                width = 0.2, position = position_dodge(width = 0.8)) +
+  facet_wrap(~intent, scales = "free_x") +  # Split by intentional vs. accidental
+  scale_fill_manual(values = c("harm" = "gray", "purity" = "black")) +  # Custom colors for violation type
+  labs(x = "Scenario", y = "Morality Rating (1 = Not at all morally wrong, 7 = Very morally wrong)",
+       title = "Experiment 1: Intentional vs. Accidental") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 12),
+    axis.text.y = element_text(size = 12)
+  )
+
+```     
+
 ### Exploratory analyses
 
 Any follow-up analyses desired (not required).
@@ -178,3 +343,14 @@ Open the discussion section with a paragraph summarizing the primary result from
 
 Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.
 None of these need to be long.
+
+
+## link to your experimental paradigm
+
+<https://ucsd-psych201a.github.io/young2011/>
+
+
+OSF: <https://osf.io/6hy4r/>
+
+## feedback on experimental paradigm
+- At the end of the program, after the experiment is completed, the response data is displayed directly to the participants, which is unnecessary.
