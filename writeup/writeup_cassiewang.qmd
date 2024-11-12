@@ -1,0 +1,171 @@
+---
+title: "Replication of Study by Young & Saxe. (2011, Cognition)"
+author: "Cassie Wang (tiw037@ucsd.edu)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc_depth: 3
+---
+
+### Experimental paradigam:
+Link: https://ucsd-psych201a.github.io/young2011/
+
+<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
+
+## Introduction
+
+I chose to replicate study by Young and Saxe (https://doi.org/10.1016/j.cognition.2011.04.005) because it provides a fundamental exploration of how intent influences moral judgments across distinct moral domains, specifically harm (e.g., assault) and purity violations (e.g., incest). This experiment highlights that while intent is a crucial factor in moral judgments of harm, it is less influential in purity violations. This result shows different moral evaluations of actions based on intent, offering insight into human decision-making in ethically complicated situations. It aligns with my interests in understanding decision-making process. The study offers a way to explore whether moral judgments are universal or context-specific, making it an excellent candidate for replication.
+
+In my replication study, I will conduct an online survey where participants will read scenarios involving both harm and purity violations, presented in the second-person perspective like Experiment 1A from the original study. Scenarios will be depicted as either intentionally or accidentally. Participants will rate the moral wrongness of each action on a 7-point scale, from “not at all morally wrong” to “very morally wrong.” Challenges in replicating this study may include recruiting a group of participants that reflects the original demographic across online platforms.
+
+## Design Oveview
+2 factors are manipulated in the experiments (intentional vs. accidental) (harm vs purity). 1 measure of moral wrongness are taken and repeated after each scenario is prestented. It used between participants design. If changed to within participants design, participants might be able to realize the purpose of the research, hence influence their responses to the study. The experiment will be double blind to reduce demand characteristics. Some of the confounds variables could be educational level or gender. 
+
+## Methods
+
+### Power Analysis
+
+Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
+
+### Planned Sample
+
+We plan to recruit participants with an age rang (18-68) through an online platforms such as Reddit. We will verify that participants have not completed a similar task before to avoid familiarity biases.
+
+### Materials
+
+We will use the exact moral judgment scenarios in second-perso perspectives used in the original study, including actions representing harm and purity violations with varied intentions (intentional vs. accidental).
+
+### Procedure	
+
+Participants will be presented with a single randomly assigned moral judgment scenario and asked to rate its moral wrongness on a 7-point scale. This scale ranges from “not at all morally wrong” (1) to “very morally wrong” (7). 
+
+
+### Analysis Plan
+
+A 2x2 ANOVA analysis will be conducted to assess the main effects and interactions between intent (accidental vs. intentional) and domain (harm vs. purity) on moral wrongness judgments.
+
+**Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do.
+
+### Differences from Original Study
+
+First, the original study recruited participants from Amazon Mechanical Turk (MTurk). We might use other online platforms like Reddit or Twitter to achieve a broader demographics. We will maintain the same recruitment criteria to minimize the influence that can be caused by differences in demographics and believe that this minor differences will not significantly impact our ability to replicate the original findings.
+
+### Methods Addendum (Post Data Collection)
+
+You can comment this section out prior to final report with data collection.
+
+#### Actual Sample
+  Sample size, demographics, data exclusions based on rules spelled out in analysis plan
+
+#### Differences from pre-data collection methods plan
+  Any differences from what was described as the original plan, or “none”.
+
+
+## Results
+
+
+### Data preparation
+
+Data preparation following the analysis plan.
+	
+```{r include=F}
+### Data Preparation
+
+#### Load Relevant Libraries and Functions
+
+# Load libraries like dplyr, ggplot2, tidyverse 
+
+#### Import data
+
+#### Data exclusion / filtering
+
+# Exclude participants that are not in our targetd age range and already participated in similar research before
+
+#### Prepare data for analysis - create columns etc.
+
+# Ensure variables are correctly formatted and add necessary columns for analysis.
+
+# Load necessary libraries
+library(dplyr)
+
+# Set the directory path
+data_dir <- "/Users/tw/Documents/GitHub/young/data/PilotA"
+
+# Read and combine all CSV files with rating extraction
+data_files <- list.files(data_dir, pattern = "*.csv", full.names = TRUE)
+data <- data_files %>%
+  lapply(function(file) {
+    df <- read.csv(file)
+    
+    # Extract rating from the response column if it is in JSON format
+    df$rating <- sapply(df$response, function(resp) {
+      if (is.character(resp) && grepl("Q0", resp)) {
+        # Parse JSON-like response format to extract the rating
+        as.numeric(gsub(".*\"Q0\":(\\d+).*", "\\1", resp))
+      } else {
+        NA
+      }
+    })
+    df
+  }) %>%
+  bind_rows()
+
+# Remove rows with NA ratings
+data <- data %>% filter(!is.na(rating))
+
+# Map 'condition' to 'intent'
+data$intent <- ifelse(data$condition == 1, "accidental", "intentional")
+
+# Assign 'domain' based on row index as a placeholder, or adjust as needed
+data$domain <- ifelse(seq_len(nrow(data)) %% 2 == 0, "harm", "purity")
+
+# Convert 'intent' and 'domain' to factors
+data$intent <- factor(data$intent, levels = c("accidental", "intentional"))
+data$domain <- factor(data$domain, levels = c("harm", "purity"))
+
+# Conduct the 2x2 ANOVA
+anova_result <- aov(rating ~ intent * domain + Error(subject/(intent * domain)), data = data)
+
+# Display ANOVA summary
+summary(anova_result)
+
+```
+### Pilot data results 
+# Results
+Error: subject
+          Df Sum Sq Mean Sq F value Pr(>F)  
+intent     1  45.00   45.00   31.15 0.0114 *
+Residuals  3   4.33    1.44                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Error: subject:domain
+              Df Sum Sq Mean Sq F value Pr(>F)
+domain         1  0.833  0.8333   0.459  0.547
+intent:domain  1  0.556  0.5556   0.306  0.619
+Residuals      3  5.444  1.8148               
+
+Error: Within
+          Df Sum Sq Mean Sq F value Pr(>F)
+Residuals 20  19.33  0.9667  
+
+### Confirmatory analysis
+
+We will conduct a 2x2 ANOVA to test the main and interaction effects of intent (intentional vs. accidental) and domain (harm vs. purity) on moral wrongness ratings. We expect the results to match the result of the original study that illustrated an interaction between intent and domain, indicating that intent plays a more significant role in harm than purity judgments.
+
+*Side-by-side graph with original graph is ideal here*
+
+### Exploratory analyses
+
+Any follow-up analyses desired (not required).  
+
+## Discussion
+
+### Summary of Replication Attempt
+
+Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.  
+
+### Commentary
+
+Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.
