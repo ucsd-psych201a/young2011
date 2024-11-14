@@ -32,13 +32,22 @@
         }
     );
 
-    // generate a random subject ID with 15 characters
+    
+    // capture info from Prolific
+    var subject_id = jsPsych.data.getURLVariable('PROLIFIC_PID');
+    var study_id = jsPsych.data.getURLVariable('STUDY_ID');
+    var session_id = jsPsych.data.getURLVariable('SESSION_ID');
 
-    const subject_id = jsPsych.randomization.randomID(10);
-    const filename = `${subject_id}.csv`;
+    jsPsych.data.addProperties({
+        subject_id: subject_id,
+        study_id: study_id,
+        session_id: session_id
+    });
+    
             
 
-
+    //const subject_id = jsPsych.randomization.randomID(10);
+    const filename = `${subject_id}.csv`;
 
     var condition_number = [1, 2]
 
@@ -90,7 +99,6 @@
 
     // this adds a property called 'subject' and a property called 'condition' to every trial
     jsPsych.data.addProperties({
-        subject: subject_id,
         condition: condition_assignment
     });
 
@@ -209,7 +217,8 @@
 
     var debrief = {
         type: jsPsychHtmlKeyboardResponse,
-        stimulus: '<div class="stimulus- text" style="max-width: 1500px;"> Thank you for completing the survey. This survey was intended to understsand how people make judgments about morality and what factors infludence their judgments. Please press any key to save your data and end the survey.</div>'
+        stimulus: '<div class="stimulus- text" style="max-width: 1500px;"> Thank you for completing the survey. This survey was intended to understsand how people make judgments about morality and what factors infludence their judgments. <p><a href="https://app.prolific.com/submissions/complete?cc=CVWDWOUQ">Click here to return to Prolific and complete the study</a>.</p> </div > ',
+        choices: "NO_KEYS"
     };
 
     const save_data = {
@@ -220,7 +229,7 @@
                 data_string: ()=>jsPsych.data.get().csv()
               };
 
-    timeline.push(takenSurveyBeforeQuestion, scenarioDisplay1, likertQuestion, scenarioDisplay2, likertQuestion, scenarioDisplay3, likertQuestion, scenarioDisplay4, likertQuestion, scenarioDisplay5, likertQuestion, scenarioDisplay6, likertQuestion, takenSurveyAfterQuestion, debrief, save_data);
+    timeline.push(takenSurveyBeforeQuestion, scenarioDisplay1, likertQuestion, scenarioDisplay2, likertQuestion, scenarioDisplay3, likertQuestion, scenarioDisplay4, likertQuestion, scenarioDisplay5, likertQuestion, scenarioDisplay6, likertQuestion, takenSurveyAfterQuestion, save_data, debrief);
 
 
     
