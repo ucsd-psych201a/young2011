@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Replication Author[s]: Seyi Lawal">
-<meta name="dcterms.date" content="2024-11-08">
+<meta name="dcterms.date" content="2024-11-19">
 
 <title>Replication of Study 1A by Liane Young and Rebecca Saxe (2011, Cognition)</title>
 <style>
@@ -3133,7 +3133,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 8, 2024</p>
+      <p class="date">November 19, 2024</p>
     </div>
   </div>
   
@@ -3151,7 +3151,7 @@ vertical-align: -.125em;
 <p>The main thesis of the original paper is that while intent matters in making moral judgments, intent will play a smaller role in making moral judgments of purity-related violations vs. harm-related violations. In the first study, the authors test whether for harms and purity violations that are equally wrong, when committed intentionally, there’s a difference in the moral judgment when those actions are committed accidentally. The study is operationalized as a 2 (intent: intentional vs. accidental) x 3 (domain: harm vs. incest vs. ingestion) between subjects design, where participants are presented with moral scenarios and asked to evaluate the extent to which the action is morally wrong on a scale of 1 - 7. There are 2 scenarios representing each domain. The main finding we are planning to replicate are the three, 2 (intent) x 2 (domain) ANOVAs comparing the importance of intent for harm vs. incest, incest vs. ingestion, and harm vs. ingestion. Through the analysis, the authors found an intent by domain interaction when comparing the harm violations to the purity violations, but not the two purity violations to one another.</p>
 <p><strong>Repo Link:</strong> <a href="https://github.com/ucsd-psych201a/young2011" class="uri">https://github.com/ucsd-psych201a/young2011</a></p>
 <p><strong>Original Paper Link:</strong> <a href="https://github.com/ucsd-psych201a/young2011/tree/main/original_paper" class="uri">https://github.com/ucsd-psych201a/young2011/tree/main/original_paper</a></p>
-<p><strong>OSF Paradigm Link:</strong> <a href="https://osf.io/6hy4r/" class="uri">https://osf.io/6hy4r/</a></p>
+<p><strong>Paradigm Link:</strong> <a href="https://ucsd-psych201a.github.io/young2011/" class="uri">https://ucsd-psych201a.github.io/young2011/</a></p>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
@@ -3252,20 +3252,177 @@ vertical-align: -.125em;
 <section id="data-preparation" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation">Data preparation</h3>
 <p>Data preparation following the analysis plan.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Data Preparation</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="do">#### Load Relevant Libraries and Functions</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;pacman&quot;</span>, <span class="at">repos =</span> <span class="st">&quot;http://cran.us.r-project.org&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Installing package into &#39;C:/Users/seyil/AppData/Local/R/win-library/4.4&#39;
+(as &#39;lib&#39; is unspecified)</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>package &#39;pacman&#39; successfully unpacked and MD5 sums checked
+
+The downloaded binary packages are in
+    C:\Users\seyil\AppData\Local\Temp\Rtmpq6OA52\downloaded_packages</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(dplyr,tidyverse,ggplot2,lubridate,stringr,kableExtra, scales)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">#### Import data; load data from csv</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>csv_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> <span class="st">&quot;~/Coursework/Fall 2024/PSYC 201A/young2011/data/PilotA&quot;</span>, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">.csv$&quot;</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> csv_files <span class="sc">%&gt;%</span> <span class="fu">map_dfr</span>(read_csv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 15 Columns: 10</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (6): stimulus, response, trial_type, plugin_version, subject, question_o...
+dbl (4): rt, trial_index, time_elapsed, condition
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+Rows: 15 Columns: 10
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (6): stimulus, response, trial_type, plugin_version, subject, question_o...
+dbl (4): rt, trial_index, time_elapsed, condition
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+Rows: 15 Columns: 10
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (6): stimulus, response, trial_type, plugin_version, subject, question_o...
+dbl (4): rt, trial_index, time_elapsed, condition
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+Rows: 15 Columns: 10
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (6): stimulus, response, trial_type, plugin_version, subject, question_o...
+dbl (4): rt, trial_index, time_elapsed, condition
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+Rows: 15 Columns: 10
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (6): stimulus, response, trial_type, plugin_version, subject, question_o...
+dbl (4): rt, trial_index, time_elapsed, condition
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #### Data exclusion / filtering</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## add scenario to response row; then, remove html response rows</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> raw_data <span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">stimulus =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      trial_type <span class="sc">==</span> <span class="st">&quot;survey-likert&quot;</span> <span class="sc">~</span> <span class="fu">lag</span>(stimulus),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> stimulus  <span class="co"># Keep the original value if the condition is not met</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(trial_type <span class="sc">!=</span> <span class="st">&quot;html-keyboard-response&quot;</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co">#remove any participants who say they have take a similar test before</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>participants_who_have_taken_survey <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(response <span class="sc">==</span> <span class="st">&quot;{</span><span class="sc">\&quot;</span><span class="st">TakenSurveyBefore</span><span class="sc">\&quot;</span><span class="st">:</span><span class="sc">\&quot;</span><span class="st">Yes</span><span class="sc">\&quot;</span><span class="st">}&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(subject) <span class="sc">%&gt;%</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(subject)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a> cleaned_data <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> </span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">anti_join</span>(participants_who_have_taken_survey, <span class="at">by =</span> <span class="st">&quot;subject&quot;</span>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># #remove any duplicate prolfic ids</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co"># cleaned_data &lt;- cleaned_data %&gt;% distinct(prolific_id, .keep_all = TRUE)</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="do">#### Prepare data for analysis - create columns etc.</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co">#create columns for scenario (allergy, poison, sibling incest, parent incest, eating dog, drinking urine), intent (intentional versus accidental), domain (harm versus incest versus ingestion), and violation type (harm vs. purity)</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a> <span class="at">scenario =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;You &lt;strong&gt;have no idea&lt;/strong&gt; she is allergic to peanuts&quot;</span>) <span class="sc">~</span> <span class="st">&quot;allergy&quot;</span>,</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;&lt;strong&gt;You do not know that someone replaced the sugar with poison.&lt;/strong&gt;&quot;</span>) <span class="sc">~</span> <span class="st">&quot;poison&quot;</span>,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;&lt;strong&gt;The next day, you end up talking, and you discover that you are actually long lost siblings.&lt;/strong&gt;&quot;</span>) <span class="sc">~</span> <span class="st">&quot;sibling_incest&quot;</span>,</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;You &lt;strong&gt;have no idea&lt;/strong&gt; that this person is actually your biological parent&quot;</span>) <span class="sc">~</span> <span class="st">&quot;parent_incest&quot;</span>,</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;It is &lt;strong&gt;incorrectly labeled “beef”&quot;</span>) <span class="sc">~</span> <span class="st">&quot;eating_dog&quot;</span>,</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;Your friend &lt;strong&gt;forgets to tell you&lt;/strong&gt; that the cup contains her urine for her pregnancy test.&quot;</span>) <span class="sc">~</span> <span class="st">&quot;drinking_urine&quot;</span>,</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;You &lt;strong&gt;know&lt;/strong&gt; she is allergic to peanuts.&quot;</span>) <span class="sc">~</span> <span class="st">&quot;allergy&quot;</span>,</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;&lt;strong&gt;You know full well that you are putting poison in her coffee.&lt;/strong&gt;&quot;</span>) <span class="sc">~</span> <span class="st">&quot;poison&quot;</span>,</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;That night, you end up talking, and you discover that you are actually long lost siblings.&quot;</span>) <span class="sc">~</span> <span class="st">&quot;sibling_incest&quot;</span>,</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;You &lt;strong&gt;discover&lt;/strong&gt; that this person is actually your biological parent&quot;</span>) <span class="sc">~</span> <span class="st">&quot;parent_incest&quot;</span>,</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;It is &lt;strong&gt;correctly labeled “dog”&lt;/strong&gt;.&quot;</span>) <span class="sc">~</span> <span class="st">&quot;eating_dog&quot;</span>,</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>   <span class="fu">str_detect</span>(stimulus, <span class="st">&quot;Your friend &lt;strong&gt;warns&lt;/strong&gt; you that the cup contains her urine for her pregnancy test&quot;</span>) <span class="sc">~</span> <span class="st">&quot;drinking_urine&quot;</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a> ) </span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">domain =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>    scenario <span class="sc">==</span> <span class="st">&quot;allergy&quot;</span> <span class="sc">~</span> <span class="st">&quot;harm&quot;</span>,</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    scenario <span class="sc">==</span> <span class="st">&quot;poison&quot;</span> <span class="sc">~</span> <span class="st">&quot;harm&quot;</span>,</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>    scenario <span class="sc">==</span> <span class="st">&quot;sibling_incest&quot;</span> <span class="sc">~</span> <span class="st">&quot;incest&quot;</span>,</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>    scenario <span class="sc">==</span> <span class="st">&quot;parent_incest&quot;</span> <span class="sc">~</span> <span class="st">&quot;incest&quot;</span>,</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>    scenario <span class="sc">==</span> <span class="st">&quot;eating_dog&quot;</span> <span class="sc">~</span> <span class="st">&quot;ingestion&quot;</span>,</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>    scenario <span class="sc">==</span> <span class="st">&quot;drinking_urine&quot;</span> <span class="sc">~</span> <span class="st">&quot;ingestion&quot;</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">violation_type =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    domain <span class="sc">==</span> <span class="st">&quot;harm&quot;</span> <span class="sc">~</span> <span class="st">&quot;harm&quot;</span>,</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    domain <span class="sc">==</span> <span class="st">&quot;incest&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span>,</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>    domain <span class="sc">==</span> <span class="st">&quot;ingestion&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>) </span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>  <span class="at">intent =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>    condition <span class="sc">==</span> <span class="st">&quot;1&quot;</span> <span class="sc">~</span> <span class="st">&quot;accidental&quot;</span>,</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    condition <span class="sc">==</span> <span class="st">&quot;2&quot;</span> <span class="sc">~</span> <span class="st">&quot;intentional&quot;</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">filter</span> (trial_type <span class="sc">!=</span> <span class="st">&quot;survey-multi-choice&quot;</span>)</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>  <span class="at">moral_wrongness =</span> <span class="fu">as.numeric</span>(<span class="fu">str_sub</span>(response, <span class="dv">7</span>, <span class="dv">7</span>))</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a><span class="co">#create subset dataframe for comparing harm vs. incest (filter domain column)</span></span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>dataframe_harm_incest <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(domain <span class="sc">==</span> <span class="st">&quot;harm&quot;</span> <span class="sc">|</span> domain <span class="sc">==</span> <span class="st">&quot;incest&quot;</span>)</span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a><span class="co">#create subset dataframe for comparing harm vs. ingestion (filter domain column)</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>dataframe_harm_ingestion <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(domain <span class="sc">==</span> <span class="st">&quot;harm&quot;</span> <span class="sc">|</span> domain <span class="sc">==</span> <span class="st">&quot;ingestion&quot;</span>)</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a><span class="co">#create subset dataframe for comparing incest vs. ingestion (filter domain column)</span></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>dataframe_incest_ingestion <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span> <span class="fu">filter</span>(domain <span class="sc">==</span> <span class="st">&quot;incest&quot;</span> <span class="sc">|</span> domain <span class="sc">==</span> <span class="st">&quot;ingestion&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="confirmatory-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="confirmatory-analysis">Confirmatory analysis</h3>
 <p>The analyses as specified in the analysis plan.</p>
 <p><em>Side-by-side graph with original graph is ideal here</em></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate aov comparing harm vs. incest</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st"> AOV comparing harm vs. incest&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate aov comparing harm vs. incest</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st"> AOV comparing harm vs. incest&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  AOV comparing harm vs. incest</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>anova_result_harm_incest <span class="ot">&lt;-</span> <span class="fu">aov</span>(moral_wrongness <span class="sc">~</span> intent <span class="sc">*</span> domain, <span class="at">data =</span> dataframe_harm_incest)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(anova_result_harm_incest))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>anova_result_harm_incest <span class="ot">&lt;-</span> <span class="fu">aov</span>(moral_wrongness <span class="sc">~</span> intent <span class="sc">*</span> domain, <span class="at">data =</span> dataframe_harm_incest)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(anova_result_harm_incest))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 intent         1  12.00  12.000  20.571 0.000683 ***
@@ -3275,14 +3432,14 @@ Residuals     12   7.00   0.583
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate aov comparing harm vs. ingestion</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st"> AOV comparing harm vs. ingestion&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate aov comparing harm vs. ingestion</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st"> AOV comparing harm vs. ingestion&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  AOV comparing harm vs. ingestion</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>anova_result_harm_igestion <span class="ot">&lt;-</span> <span class="fu">aov</span>(moral_wrongness <span class="sc">~</span> intent <span class="sc">*</span> domain, <span class="at">data =</span> dataframe_harm_ingestion)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(anova_result_harm_igestion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>anova_result_harm_igestion <span class="ot">&lt;-</span> <span class="fu">aov</span>(moral_wrongness <span class="sc">~</span> intent <span class="sc">*</span> domain, <span class="at">data =</span> dataframe_harm_ingestion)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(anova_result_harm_igestion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 intent         1  27.00  27.000  24.923 0.000313 ***
@@ -3292,14 +3449,14 @@ Residuals     12  13.00   1.083
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate aov comparing incest vs. ingestion</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st"> AOV comparing incest vs. ingestion&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate aov comparing incest vs. ingestion</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st"> AOV comparing incest vs. ingestion&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
  AOV comparing incest vs. ingestion</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>anova_result_incest_ingestion <span class="ot">&lt;-</span> <span class="fu">aov</span>(moral_wrongness <span class="sc">~</span> intent <span class="sc">*</span> domain, <span class="at">data =</span> dataframe_incest_ingestion)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(anova_result_incest_ingestion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>anova_result_incest_ingestion <span class="ot">&lt;-</span> <span class="fu">aov</span>(moral_wrongness <span class="sc">~</span> intent <span class="sc">*</span> domain, <span class="at">data =</span> dataframe_incest_ingestion)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">summary</span>(anova_result_incest_ingestion))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              Df Sum Sq Mean Sq F value Pr(&gt;F)  
 intent         1   6.75   6.750   6.231 0.0281 *
@@ -3309,42 +3466,42 @@ Residuals     12  13.00   1.083
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create bar graph in fig 2</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate mean and standard error for moral_wrongness by scenario and intent</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df_summary <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scenario, intent) <span class="sc">%&gt;%</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_moral_wrongness =</span> <span class="fu">mean</span>(moral_wrongness),</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">se_moral_wrongness =</span> <span class="fu">sd</span>(moral_wrongness) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create bar graph in fig 2</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate mean and standard error for moral_wrongness by scenario and intent</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df_summary <span class="ot">&lt;-</span> cleaned_data <span class="sc">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scenario, intent) <span class="sc">%&gt;%</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean_moral_wrongness =</span> <span class="fu">mean</span>(moral_wrongness),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">se_moral_wrongness =</span> <span class="fu">sd</span>(moral_wrongness) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>())</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by &#39;scenario&#39;. You can override using the
 `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#add violation type to summary data frame</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df_summary <span class="ot">&lt;-</span> df_summary <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">violation_type =</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">case_when</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;allergy&quot;</span> <span class="sc">~</span> <span class="st">&quot;harm&quot;</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;poison&quot;</span> <span class="sc">~</span> <span class="st">&quot;harm&quot;</span>,</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;sibling_incest&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;parent_incest&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;eating_dog&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span>,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;drinking_urine&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>              ))</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#create plot</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_summary, <span class="fu">aes</span>(<span class="at">x =</span> scenario, <span class="at">y =</span> mean_moral_wrongness,<span class="at">label =</span> scenario, <span class="at">fill =</span> violation_type)) <span class="sc">+</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_moral_wrongness <span class="sc">-</span> se_moral_wrongness, <span class="at">ymax =</span> mean_moral_wrongness <span class="sc">+</span> se_moral_wrongness),</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>)) <span class="sc">+</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>intent, <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span> <span class="co">#split intentional vs. accidenta</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;harm&quot;</span> <span class="ot">=</span> <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;purity&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span> <span class="co"># Color mapping</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Scenario&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Morality Rating (1 (Not at all morally wrong) - 7 (very morally wrong))&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Experiment 1: Intentional vs. Accidental&quot;</span>) <span class="sc">+</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>) </span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#add violation type to summary data frame</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>df_summary <span class="ot">&lt;-</span> df_summary <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">violation_type =</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">case_when</span>(</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;allergy&quot;</span> <span class="sc">~</span> <span class="st">&quot;harm&quot;</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;poison&quot;</span> <span class="sc">~</span> <span class="st">&quot;harm&quot;</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;sibling_incest&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;parent_incest&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;eating_dog&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                scenario <span class="sc">==</span> <span class="st">&quot;drinking_urine&quot;</span> <span class="sc">~</span> <span class="st">&quot;purity&quot;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>              ))</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">#create plot</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_summary, <span class="fu">aes</span>(<span class="at">x =</span> scenario, <span class="at">y =</span> mean_moral_wrongness,<span class="at">label =</span> scenario, <span class="at">fill =</span> violation_type)) <span class="sc">+</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> mean_moral_wrongness <span class="sc">-</span> se_moral_wrongness, <span class="at">ymax =</span> mean_moral_wrongness <span class="sc">+</span> se_moral_wrongness),</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.8</span>)) <span class="sc">+</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>intent, <span class="at">scales =</span> <span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span> <span class="co">#split intentional vs. accidenta</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;harm&quot;</span> <span class="ot">=</span> <span class="st">&quot;gray&quot;</span>, <span class="st">&quot;purity&quot;</span> <span class="ot">=</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span> <span class="co"># Color mapping</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Scenario&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Morality Rating (1 (Not at all morally wrong) - 7 (very morally wrong))&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Experiment 1: Intentional vs. Accidental&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>) </span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

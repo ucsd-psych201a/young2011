@@ -26,7 +26,7 @@ Through the analysis, the authors found an intent by domain interaction when com
 
 **Original Paper Link:** <https://github.com/ucsd-psych201a/young2011/tree/main/original_paper>
 
-**OSF Paradigm Link:** <https://osf.io/6hy4r/> 
+**Paradigm Link:** <https://ucsd-psych201a.github.io/young2011/> 
 
 ## Methods
 
@@ -194,7 +194,7 @@ In case general perspectives on any of these domains have shifted over time, we 
 
 Data preparation following the analysis plan.
 
-```{r include=F}
+```{r}
 ### Data Preparation
 
 #### Load Relevant Libraries and Functions
