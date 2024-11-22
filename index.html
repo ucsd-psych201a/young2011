@@ -48,8 +48,8 @@
     
             
 
-    //const subject_id = jsPsych.randomization.randomID(10);
-    const filename = `${subject_id}.csv`;
+    const subject_id_csv = jsPsych.randomization.randomID(10);
+    const filename = `${subject_id_csv}.csv`;
             
 
     var condition_number = [1, 2]
@@ -253,7 +253,7 @@
     const save_data = {
                 type: jsPsychPipe,
                 action: "save",
-                experiment_id: "i6PAwmiRbG21",
+                experiment_id: "oFwXu5cBjEnC",
                 filename: filename,
                 data_string: ()=>jsPsych.data.get().csv()
               };
