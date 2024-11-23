@@ -1,0 +1,46 @@
+"rt","stimulus","response","trial_type","trial_index","plugin_version","time_elapsed","subject","condition","question_order"
+"1549","Welcome to the experiment. Press any key to begin."," ","html-keyboard-response","0","2.0.0","1550","4mez7rgk70","1",""
+"14548","","{""TakenSurveyBefore"":""No""}","survey-multi-choice","1","null","16101","4mez7rgk70","1","[0]"
+"2037","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school’s football game and meet someone a bit older. You <strong>have no idea</strong> that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).
+           </div>
+        </p>
+             "," ","html-keyboard-response","2","2.0.0","18140","4mez7rgk70","1",""
+"2125","","{""Q0"":6}","survey-likert","3","null","20268","4mez7rgk70","1","[0]"
+"748","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine your cousin is over for dinner. You <strong>have no idea</strong> she is allergic to peanuts. You decide to add peanuts to the dish because they really bring out the flavor for you. You grind up the peanuts, add them in, and serve your cousin.
+           </div>
+        </p>
+             "," ","html-keyboard-response","4","2.0.0","21017","4mez7rgk70","1",""
+"1598","","{""Q0"":6}","survey-likert","5","null","22617","4mez7rgk70","1","[0]"
+"665","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine that you are waiting to brush your teeth while your friend is in the bathroom. As she leaves, you notice a cup and a pregnancy test. Your friend <strong>forgets to tell you</strong> that the cup contains her urine for her pregnancy test. You finish brushing your teeth and use that cup to rinse out your mouth.
+           </div>
+        </p>
+             "," ","html-keyboard-response","6","2.0.0","23284","4mez7rgk70","1",""
+"1465","","{""Q0"":6}","survey-likert","7","null","24751","4mez7rgk70","1","[0]"
+"555","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine that a car just killed your beloved dog. Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad. Later, you decide to make yourself dinner. You see a package in the freezer. It is <strong>incorrectly labeled “beef” – but it is actually the meat from your dog. Without realizing it</strong>, you end up eating your dog for dinner.
+           </div>
+        </p>
+             "," ","html-keyboard-response","8","2.0.0","25307","4mez7rgk70","1",""
+"1324","","{""Q0"":6}","survey-likert","9","null","26634","4mez7rgk70","1","[0]"
+"489","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. At the end of the night, you decide to sleep together (using two forms of birth control to be safe). <strong>The next day, you end up talking, and you discover that you are actually long lost siblings.</strong>
+           </div>
+        </p>
+             "," ","html-keyboard-response","10","2.0.0","27125","4mez7rgk70","1",""
+"1257","","{""Q0"":6}","survey-likert","11","null","28383","4mez7rgk70","1","[0]"
+"77","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px;"">
+        Imagine you and a co-worker are taking a tour of a chemical plant. During the coffee break, you go to pour some coffee. You like yours black, but your co-worker asks for sugar in hers. You spoon some powder into your co-worker’s coffee. <strong>You do not know that someone replaced the sugar with poison.</strong>
+           </div>
+        </p>
+             "," ","html-keyboard-response","12","2.0.0","28462","4mez7rgk70","1",""
+"1519","","{""Q0"":6}","survey-likert","13","null","29983","4mez7rgk70","1","[0]"
+"2499","","{""TakenSurveyBefore"":""No""}","survey-multi-choice","14","null","32483","4mez7rgk70","1","[0]"
