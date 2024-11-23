@@ -1,0 +1,47 @@
+"rt","stimulus","response","trial_type","trial_index","plugin_version","time_elapsed","subject_id","study_id","session_id","condition","question_order"
+"629","Welcome to the experiment. Press any key to begin.","d","html-keyboard-response","0","2.0.0","631","","","","1",""
+"4219","<div class=""stimulus- text"" style=""max-width: 1500px; padding: 30px; text-align: left;""> You are being invited to participate in a research study titled “Reproducibility of Psychological Science and Instruction.” This study is being done by Dr. Bria Long from UC San Diego and associated graduate students in Experimental Methods course. You were selected to participate in this study because you are an adult in the U.S. and have been a represented population in previous psychology studies. <br><br> The purpose of this study is to better understand how well previously published studies in the psychological field replicate online and with different populations.Your participation in this research should last approximately 5-30 minutes. If you agree to take part in this study, you may be asked to view a set of stimuli, including pictures, sounds, written text, or videos and then giving some responses via key- presses, verbally, or with paper - and - pencil. We may also observe your choices or preferences among an array of stimuli. These stimuli will be taken directly from or closely adapted from studies that already exist in the published psychological literature. Stimuli will include, e.g., pictures of objects and human faces, audio and video clips, short text passages, etc. None of the stimuli will be disturbing, threatening, or offensive. <br><br> The online and in -person experiments described in this protocol will take no more than 30 minutes. An example game you might play would be to click on an image on the screen that matches a word you hear being said out loud. Your total expected time commitment for this study is between 5 - 30 minutes, and is specified in the study description. Your participation in this study is completely voluntary and you can withdraw at any time. Choosing not to participate or withdrawing will result in no penalty or loss of benefits to which you are entitled. You are free to skip any question that you choose. We will not be asking for any personally identifying information, and we will handle responses as confidentially as possible. <br><br> Your SONA or Prolific IDs will never be tied to your responses on this survey.However, we cannot guarantee the confidentiality of information transmitted over the Internet.To minimize this risk, data containing anything that might be personally identifiable(e.g.Prolific IDs or IP addresses) will be encrypted on transfer and storage and will only be accessible to qualified lab personnel.We will be keeping data collected as part of this experiment indefinitely. This anonymized data (containing neither Prolific IDs nor IP addresses) may be shared with the scientific community or with other participants to be used as stimuli in future studies. <br><br> If you have questions about this project or if you have a research - related problem, you may contact the researcher(s), Dr.Bria Long, brlong@ucsd.edu.If you have any questions concerning your rights as a research subject, you may contact the UC San Diego Office of IRB Administration at irb @ucsd.edu or 858 - 246 - 4777. By participating in this research you are indicating that you are at least 18 years old, have read this consent form, and agree to participate in this research study.Please keep this consent form for your records. <br><br> <strong> If you want to proceed, please click any key to continue </strong></div>","d","html-keyboard-response","1","2.0.0","4856","","","","1",""
+"751","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px; text-align: left;"">
+        Imagine that a car just killed your beloved dog. Your significant other has heard that dog meat is delicious and freezes the meat of your dog before it goes bad. Later, you decide to make yourself dinner. You see a package in the freezer. It is <strong>incorrectly labeled “beef” – but it is actually the meat from your dog. Without realizing it</strong>, you end up eating your dog for dinner.
+           </div>
+        </p>
+             ","d","html-keyboard-response","2","2.0.0","5608","","","","1",""
+"2430","","{""Q0"":3}","survey-likert","3","null","8042","","","","1","[0]"
+"3587","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px; text-align: left;"">
+        Imagine your cousin is over for dinner. You <strong>have no idea</strong> she is allergic to peanuts. You decide to add peanuts to the dish because they really bring out the flavor for you. You grind up the peanuts, add them in, and serve your cousin.
+           </div>
+        </p>
+             ","d","html-keyboard-response","4","2.0.0","11633","","","","1",""
+"2900","","{""Q0"":3}","survey-likert","5","null","14534","","","","1","[0]"
+"293","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px; text-align: left;"">
+        Imagine you are at a dorm party and really hit it off with someone. This person feels the same way about you. At the end of the night, you decide to sleep together (using two forms of birth control to be safe). <strong>The next day, you end up talking, and you discover that you are actually long lost siblings.</strong>
+           </div>
+        </p>
+             ","d","html-keyboard-response","6","2.0.0","14829","","","","1",""
+"1435","","{""Q0"":3}","survey-likert","7","null","16265","","","","1","[0]"
+"317","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px; text-align: left;"">
+        Imagine you were adopted at birth - you have never met your birth parents. The weekend of your college reunion, you go to your school’s football game and meet someone a bit older. You <strong>have no idea</strong> that this person is actually your biological parent. You two get along really well and, that night, end up sleeping together (using two forms of birth control to be safe).
+           </div>
+        </p>
+             ","d","html-keyboard-response","8","2.0.0","16583","","","","1",""
+"1539","","{""Q0"":3}","survey-likert","9","null","18123","","","","1","[0]"
+"423","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px; text-align: left;"">
+        Imagine that you are waiting to brush your teeth while your friend is in the bathroom. As she leaves, you notice a cup and a pregnancy test. Your friend <strong>forgets to tell you</strong> that the cup contains her urine for her pregnancy test. You finish brushing your teeth and use that cup to rinse out your mouth.
+           </div>
+        </p>
+             ","d","html-keyboard-response","10","2.0.0","18548","","","","1",""
+"997","","{""Q0"":3}","survey-likert","11","null","19548","","","","1","[0]"
+"390","<strong> Please read the below scenario. Once done, press any key to continue. </strong> <p>
+        <div style=""max-width: 500px; color: #0000FF; margin: 0 auto; font-size: 16px; text-align: left;"">
+        Imagine you and a co-worker are taking a tour of a chemical plant. During the coffee break, you go to pour some coffee. You like yours black, but your co-worker asks for sugar in hers. You spoon some powder into your co-worker’s coffee. <strong>You do not know that someone replaced the sugar with poison.</strong>
+           </div>
+        </p>
+             ","d","html-keyboard-response","12","2.0.0","19940","","","","1",""
+"1112","","{""Q0"":3}","survey-likert","13","null","21053","","","","1","[0]"
+"2630","","{""TakenSurveyBefore"":""Yes""}","survey-multi-choice","14","null","23686","","","","1","[0]"
+"4076","","{""Q0"":""test""}","survey-text","15","null","27779","","","","1",""
