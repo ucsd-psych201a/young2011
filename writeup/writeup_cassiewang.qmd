@@ -30,11 +30,11 @@ Original effect size, power analysis for samples to achieve 80%, 90%, 95% power 
 
 ### Planned Sample
 
-We plan to recruit participants with an age rang (18-68) through an online platforms such as Reddit. We will verify that participants have not completed a similar task before to avoid familiarity biases.
+We plan to recruit participants with an age rang (18-68) through Prolific. The participants have to be fluent in English and live in the United States. We aimed to collect about 200 useable responses. We will verify that participants have not completed a similar task before to avoid familiarity biases.
 
 ### Materials
 
-We will use the exact moral judgment scenarios in second-perso perspectives used in the original study, including actions representing harm and purity violations with varied intentions (intentional vs. accidental).
+We will use the exact moral judgment scenarios in second-person perspectives used in the original study, including actions representing harm and purity violations with varied intentions (intentional vs. accidental).
 
 ### Procedure	
 
@@ -43,23 +43,23 @@ Participants will be presented with a single randomly assigned moral judgment sc
 
 ### Analysis Plan
 
-A 2x2 ANOVA analysis will be conducted to assess the main effects and interactions between intent (accidental vs. intentional) and domain (harm vs. purity) on moral wrongness judgments.
+A 2 tailed t-test will be performed to see how domain (harm vs. purity) influence on moral wrongness judgments when actions are accidental.
 
 **Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do.
 
 ### Differences from Original Study
 
-First, the original study recruited participants from Amazon Mechanical Turk (MTurk). We might use other online platforms like Reddit or Twitter to achieve a broader demographics. We will maintain the same recruitment criteria to minimize the influence that can be caused by differences in demographics and believe that this minor differences will not significantly impact our ability to replicate the original findings.
+First, the original study recruited participants from Amazon Mechanical Turk (MTurk). We might use Prolific to achieve a broader demographics. We will maintain the same recruitment criteria to minimize the influence that can be caused by differences in demographics and believe that this minor differences will not significantly impact our ability to replicate the original findings.
 
 ### Methods Addendum (Post Data Collection)
 
 You can comment this section out prior to final report with data collection.
 
 #### Actual Sample
-  Sample size, demographics, data exclusions based on rules spelled out in analysis plan
+  We collect 5 participants in our pilot study for the demographics of English-speaking adult living in United States. 
 
 #### Differences from pre-data collection methods plan
-  Any differences from what was described as the original plan, or “none”.
+  None
 
 
 ## Results
@@ -70,89 +70,96 @@ You can comment this section out prior to final report with data collection.
 Data preparation following the analysis plan.
 	
 ```{r include=F}
-### Data Preparation
-
-#### Load Relevant Libraries and Functions
-
-# Load libraries like dplyr, ggplot2, tidyverse 
-
-#### Import data
-
-#### Data exclusion / filtering
-
-# Exclude participants that are not in our targetd age range and already participated in similar research before
-
-#### Prepare data for analysis - create columns etc.
-
-# Ensure variables are correctly formatted and add necessary columns for analysis.
-
 # Load necessary libraries
-library(dplyr)
+library(ggplot2)
+library(jsonlite)
 
-# Set the directory path
-data_dir <- "/Users/tw/Documents/GitHub/young/data/PilotA"
+# Define the directory path
+file_path <- "/Users/tw/Documents/GitHub/young2011/data/PilotB"
 
-# Read and combine all CSV files with rating extraction
-data_files <- list.files(data_dir, pattern = "*.csv", full.names = TRUE)
-data <- data_files %>%
-  lapply(function(file) {
-    df <- read.csv(file)
-    
-    # Extract rating from the response column if it is in JSON format
-    df$rating <- sapply(df$response, function(resp) {
-      if (is.character(resp) && grepl("Q0", resp)) {
-        # Parse JSON-like response format to extract the rating
-        as.numeric(gsub(".*\"Q0\":(\\d+).*", "\\1", resp))
-      } else {
-        NA
-      }
-    })
-    df
-  }) %>%
-  bind_rows()
+# List all CSV files in the directory
+files <- list.files(file_path, pattern = "\\.csv$", full.names = TRUE)
 
-# Remove rows with NA ratings
-data <- data %>% filter(!is.na(rating))
+# Step 1: Read and Combine Data, Excluding Specific Responses
+data_list <- lapply(files, function(file) {
+  data <- read.csv(file)
+  # Exclude rows where response contains {"TakenSurveyBefore":"Yes"}
+  data <- data[!grepl('"TakenSurveyBefore":"Yes"', data$response), ]
+  return(data)
+})
+data <- do.call(rbind, data_list)
 
-# Map 'condition' to 'intent'
-data$intent <- ifelse(data$condition == 1, "accidental", "intentional")
+# Step 2: Filter out the introductory response
+data <- data[data$stimulus != "Welcome to the experiment. Press any key to begin.", ]
 
-# Assign 'domain' based on row index as a placeholder, or adjust as needed
-data$domain <- ifelse(seq_len(nrow(data)) %% 2 == 0, "harm", "purity")
+# Step 3: Extract rows with scenarios (non-null 'stimulus')
+scenarios <- data[!is.na(data$stimulus), c("trial_index", "stimulus")]
 
-# Convert 'intent' and 'domain' to factors
-data$intent <- factor(data$intent, levels = c("accidental", "intentional"))
-data$domain <- factor(data$domain, levels = c("harm", "purity"))
+# Step 4: Categorization function based on provided keywords
+categorize_scenario <- function(text) {
+  text <- tolower(text)
+  if (grepl("biological parent", text, ignore.case = TRUE)) {
+    return("purity")
+  } else if (grepl("peanuts", text, ignore.case = TRUE)) {
+    return("harm")
+  } else if (grepl("urine", text, ignore.case = TRUE)) {
+    return("purity")
+  } else if (grepl("dog meat", text, ignore.case = TRUE)) {
+    return("purity")
+  } else if (grepl("siblings", text, ignore.case = TRUE)) {
+    return("purity")
+  } else if (grepl("poison", text, ignore.case = TRUE)) {
+    return("harm")
+  }
+  return("other")
+}
 
-# Conduct the 2x2 ANOVA
-anova_result <- aov(rating ~ intent * domain + Error(subject/(intent * domain)), data = data)
+# Apply categorization
+scenarios$category <- sapply(scenarios$stimulus, categorize_scenario)
 
-# Display ANOVA summary
-summary(anova_result)
+# Step 5: Extract rows with ratings (trial_type = 'survey-likert')
+ratings <- data[data$trial_type == "survey-likert" & !is.na(data$response), c("trial_index", "response", "time_elapsed")]
 
+# Match scenarios with the closest ratings by time_elapsed
+match_closest_rating <- function(scenario_row, ratings) {
+  time_diff <- abs(ratings$time_elapsed - scenario_row["time_elapsed"])
+  closest_index <- which.min(time_diff)
+  return(ratings[closest_index, ])
+}
+
+scenarios$time_elapsed <- data[data$trial_index %in% scenarios$trial_index, "time_elapsed"]
+scenarios <- merge(scenarios, ratings, by = NULL)
+
+# Extract numeric ratings
+extract_rating <- function(response) {
+  parsed_response <- fromJSON(response)
+  return(as.numeric(parsed_response$Q0))
+}
+
+scenarios$rating <- sapply(scenarios$response, extract_rating)
+
+# Step 6: Filter out irrelevant categories
+analyzable_data <- scenarios[scenarios$category %in% c("harm", "purity"), ]
+
+# Step 7: Calculate mean ratings for each category
+mean_ratings <- aggregate(rating ~ category, data = analyzable_data, mean)
+
+# Step 8: Plot the results
+ggplot(mean_ratings, aes(x = category, y = rating, fill = category)) +
+  geom_bar(stat = "identity", color = "black") +
+  labs(title = "Difference in Wrongness Ratings: Harm vs Purity",
+       x = "Category", y = "Mean Wrongness Rating") +
+  theme_minimal() +
+  scale_fill_manual(values = c("harm" = "red", "purity" = "blue"))
 ```
-### Pilot data results 
-# Results
-Error: subject
-          Df Sum Sq Mean Sq F value Pr(>F)  
-intent     1  45.00   45.00   31.15 0.0114 *
-Residuals  3   4.33    1.44                 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Error: subject:domain
-              Df Sum Sq Mean Sq F value Pr(>F)
-domain         1  0.833  0.8333   0.459  0.547
-intent:domain  1  0.556  0.5556   0.306  0.619
-Residuals      3  5.444  1.8148               
 
-Error: Within
-          Df Sum Sq Mean Sq F value Pr(>F)
-Residuals 20  19.33  0.9667  
+
+
 
 ### Confirmatory analysis
 
-We will conduct a 2x2 ANOVA to test the main and interaction effects of intent (intentional vs. accidental) and domain (harm vs. purity) on moral wrongness ratings. We expect the results to match the result of the original study that illustrated an interaction between intent and domain, indicating that intent plays a more significant role in harm than purity judgments.
+We will conduct a 2 tailed t-test on domain (harm vs. purity) on moral wrongness ratings. We expect the results to match the result of the original study that illustrated an interaction between intent and domain, indicating that intent plays a more significant role in harm than purity judgments.
 
 *Side-by-side graph with original graph is ideal here*
 
