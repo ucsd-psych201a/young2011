@@ -200,11 +200,11 @@ Data preparation following the analysis plan.
 #### Load Relevant Libraries and Functions
 install.packages("pacman", repos = "http://cran.us.r-project.org")
 pacman::p_load(dplyr,tidyverse,ggplot2,lubridate,stringr,kableExtra, scales)
-
+library(tools) 
 #### Import data; load data from csv
-csv_files <- list.files(path = "~/Coursework/Fall 2024/PSYC 201A/young2011/data/PilotA", pattern = "\\.csv$", full.names = TRUE)
+csv_files <- list.files(path = "~/Coursework/Fall 2024/PSYC 201A/young2011/data/PilotB", pattern = "\\.csv$", full.names = TRUE)
 
-raw_data <- csv_files %>% map_dfr(read_csv)
+raw_data <- csv_files %>% map_dfr(~ read_csv(.x) %>% mutate(subject = file_path_sans_ext(basename(.x))))
 
 # #### Data exclusion / filtering
 
@@ -229,9 +229,6 @@ participants_who_have_taken_survey <- cleaned_data %>%
  cleaned_data <- cleaned_data %>% 
    anti_join(participants_who_have_taken_survey, by = "subject")
 
- 
-# #remove any duplicate prolfic ids
-# cleaned_data <- cleaned_data %>% distinct(prolific_id, .keep_all = TRUE)
 
 #### Prepare data for analysis - create columns etc.
 
@@ -283,7 +280,7 @@ cleaned_data <- cleaned_data %>% mutate(
 cleaned_data <- cleaned_data %>% filter (trial_type != "survey-multi-choice")
 
 cleaned_data <- cleaned_data %>% mutate(
-  moral_wrongness = as.numeric(str_sub(response, 7, 7))
+  moral_wrongness = as.numeric(str_sub(response, 7, 7)) + 1
 )
 
 #create subset dataframe for comparing harm vs. incest (filter domain column)
