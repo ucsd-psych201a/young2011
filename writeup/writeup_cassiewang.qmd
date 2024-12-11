@@ -300,3 +300,15 @@ The expanded effect of intent in purity domains could indicate that the original
 In future research, including measures of disgust sensitivity, moral foundations, or other individual difference variables may help explain why purity domains may now be showing increased intent sensitivity. Further replications could clarify whether these shifts are due to methodological differences, cultural change over time, or random sampling variation.
 
 In conclusion, although we followed the original methodology closely, our replication did not yield identical results. This outcome highlights the importance of replication in moral psychology research and the necessity of considering cultural and temporal contexts when interpreting moral judgments.
+
+### Contribution 
+Conceptualization: Coxi Jiang, Belynda Herrera, Seyi Lawal, and Cassie Wang.
+Data curation: Coxi Jiang, Belynda Herrera, Seyi Lawal, and Cassie Wang.
+Formal analysis: Coxi Jiang and Seyi Lawal.
+Funding acquisition: Coxi Jiang, Belynda Herrera, Seyi Lawal, and Cassie Wang.
+Investigation: Coxi Jiang, Belynda Herrera, Seyi Lawal, and Cassie Wang.
+Methodology: Coxi Jiang, Belynda Herrera, Seyi Lawal, and Cassie Wang.
+Software: Coxi Jiang and Seyi Lawal.
+Visualization: Coxi Jiang and Seyi Lawal.
+Writing - original draft: Coxi Jiang, Belynda Herrera, Seyi Lawal, and Cassie Wang.
+Writing - review & editing: Coxi Jiang, Belynda Herrera, Seyi Lawal, and Cassie Wang.
