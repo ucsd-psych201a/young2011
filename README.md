@@ -42,9 +42,9 @@ install.packages(c("tidyverse", "ggplot2", "car"))
 
 ## Contributors
 - **Belynda Herrera** (bpherrera@ucsd.edu)
-- **Cassie Wang**
-- **Kexin Jiang**
-- **Seyi Lawal**
+- **Cassie Wang** (tiw037@ucsd.edu)
+- **Kexin Jiang** (k3jiang@ucsd.edu)
+- **Seyi Lawal** (slawal@ucsd.edu)
 
 ## Citation
 If using this work, please cite:
