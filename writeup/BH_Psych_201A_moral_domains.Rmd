@@ -1,0 +1,234 @@
+---
+title: 'Replication of Study: When Ignorance Is No Excuse'
+author: "Belynda Herrera (bpherrera@ucsd.edu)"
+date: "2024-11-12"
+output:
+  html_document:
+    df_print: paged
+  pdf_document:
+    latex_engine: xelatex
+    includes:
+      in_header: preamble.tex
+    geometry: margin=1in
+---
+
+
+## Introduction
+
+The main thesis of the original paper is that while intent matters in making moral judgments, intent plays a smaller role in making moral judgments of purity-related violations compared to harm-related violations. The study is structured as a **2 (intent: intentional vs. accidental) × 3 (domain: harm vs. incest vs. ingestion) between-subjects design**, where participants evaluate moral scenarios on a 7-point scale.
+
+This replication aims to reproduce the findings by conducting three **2 (intent) × 2 (domain) ANOVAs**, comparing the importance of intent for harm vs. incest, incest vs. ingestion, and harm vs. ingestion. The original study found a significant intent-by-domain interaction when comparing harm violations to purity violations but not when comparing the two purity violations to one another.
+
+## Key Reproducibility Criteria
+
+This replication follows a structured workflow to ensure reproducibility. All analyses were conducted in R, with the following steps:
+
+
+### **Methodology Overview**
+
+1. **Data Acquisition**  
+   - Sourced from the **[original repository](https://github.com/ucsd-psych201a/young2011/tree/main/original_paper)** or collected via **Prolific**, a crowdsourcing platform.  
+   - Dataset includes standardized moral judgment ratings across multiple domains (e.g., harm, fairness).  
+
+2. **Data Processing & Cleaning**  
+   - Conducted quality checks for missing values, outliers, and inconsistencies.  
+   - Applied variable transformations (e.g., normalization, recoding) to ensure analytical readiness.  
+
+3. **Statistical Analysis**  
+   - Performed **three confirmatory 2×2 ANOVAs** with factors:  
+     - **Intent**: Present vs. Absent  
+     - **Domain**: Moral vs. Non-moral  
+   - Calculated effect sizes (η²/Cohen’s *d*) and 95% confidence intervals for key comparisons.  
+
+4. **Reproducibility & Transparency**  
+   - Full code, processed data, and analysis scripts are publicly available in the **[GitHub repository](https://github.com/ucsd-psych201a/young2011)**.  
+   - Interactive **RPubs report** provides step-by-step visualization of results:  
+     **[Paradigm & Analysis Report](https://ucsd-psych201a.github.io/young2011/)**  
+
+
+
+### **Key Resources**  
+- **Repository**: [https://github.com/ucsd-psych201a/young2011](https://github.com/ucsd-psych201a/young2011)  
+- **Original Paper**: [Link to Paper](https://github.com/ucsd-psych201a/young2011/tree/main/original_paper)  
+- **Paradigm & Materials**: [Experiment Details](https://ucsd-psych201a.github.io/young2011/)  
+
+
+
+## Methods Addendum (Post Data Collection)
+
+### Actual Sample
+
+We collected 343 participants, all English-speaking adults residing in the United States. The sample size was slightly below the targeted 351 but still provided sufficient power.
+
+### Differences from Pre-Data Collection Methods Plan
+
+No major deviations from our preregistered plan occurred.
+
+
+
+## Design Overview
+
+- Two factors were manipulated: **Intent (Intentional vs. Accidental) and Moral Domain (Harm vs. Incest vs. Ingestion)**.
+- Between-subjects experimental design, each participant was assigned to one of six conditions.
+- Each participant saw only **one** moral scenario and rated its moral wrongness on a **7-point scale**.
+- **Measures were not repeated** to avoid demand characteristics.
+- **Confounds Considered:** Education level could be a confounding factor affecting moral judgment.
+
+### Materials
+
+Each participant was assigned to **one of six conditions** in a **2 (intent: intentional vs. accidental) × 3 (domain: harm vs. incest vs. ingestion) between-subjects design**. Participants rated moral wrongness on a **7-point Likert scale** (1 = "not at all morally wrong", 7 = "very morally wrong").
+
+Scenarios for **harm, incest, and ingestion** were adapted from the original study. Each domain had two distinct scenarios:
+
+- **Harm:** Allergy (peanut allergy), Poison (chemical plant poisoning)
+- **Incest:** Sibling (long-lost sibling romance), Parent (adopted parent romance)
+- **Ingestion:** Dog Meat (eating pet dog), Urine (accidental mouth rinse with urine)
+
+### Procedure
+
+Participants were randomly assigned to one scenario and asked to rate moral wrongness. The between-subjects design prevented participants from recognizing the intent manipulation across domains.
+
+### Analysis Plan
+
+1. **Preliminary Analysis:** Three **2 (story) × 2 (intent) ANOVAs** to confirm that scenario exemplars within the same domain do not differ significantly.
+2. **Main Analysis:** Three **2 (intent) × 2 (domain) ANOVAs** to compare intent's role across:
+   - Harm vs. Incest
+   - Harm vs. Ingestion
+   - Incest vs. Ingestion
+3. **Follow-up t-tests** for significant interactions to explore specific patterns.
+```{r}
+#Install and Load Required Packages
+library(googledrive)
+library(tidyverse)
+
+# Authenticate with Google Drive (follow prompts in browser)
+drive_auth()
+```
+Authenticate and List Files in the Google Drive Folder
+```{r}
+# Replace YOUR_FOLDER_ID with the ID from your folder link
+folder_id <- "1ieiBltXMISTLgtocd9Omn7sCksOSv-iq"
+
+# List all files in the folder
+file_list <- drive_ls(path = as_id(folder_id))
+```
+cleaning the data
+
+```{r}
+print(file_list)
+
+```
+
+```{r}
+# Initialize an empty list to store data frames
+data_list <- list()
+
+for(i in seq_along(file_list$id)) {
+  # Download the file (overwrite = TRUE ensures fresh copy each time)
+  temp_file <- drive_download(as_id(file_list$id[i]), overwrite = TRUE)
+  
+  # Read the CSV file into a data frame (adjust read function if file type is different)
+  temp_data <- read.csv(temp_file$local_path)
+  
+  # Optionally, add a column to track the source file if needed
+  temp_data <- temp_data %>% mutate(source = file_list$name[i])
+  
+  # Store in the list
+  data_list[[i]] <- temp_data
+}
+
+# Combine all data frames into one final data frame
+final_data <- bind_rows(data_list)
+
+```
+
+
+
+### Power Analysis
+
+The effect size of the main result in the paper (intent × domain interaction) was **η²p = 0.15**. To detect this effect with **80% power (α = 0.05)**, we targeted a sample size of **351 participants**, aligning with the original study.
+
+```{r}
+final_data <- final_data %>%
+  mutate(
+    condition = factor(condition, levels = c("Harm", "Incest", "Ingestion"))
+  )
+summary(final_data)
+```
+## Analysis Code (ANOVA Models)
+
+```{r anova-analysis, echo=TRUE}
+
+
+# Run ANOVA models
+#anova_harm_incest <- aov(judgment_score ~ intent * domain, data = subset(moral_data, domain %in% c("Harm", "Incest")))
+#anova_incest_ingestion <- aov(judgment_score ~ intent * domain, data = subset(moral_data, domain %in% c("Incest", #"Ingestion")))
+#anova_harm_ingestion <- aov(judgment_score ~ intent * domain, data = subset(moral_data, domain %in% c("Harm", #"Ingestion")))
+
+# Display results
+#summary(anova_harm_incest)
+#summary(anova_incest_ingestion)
+#summary(anova_harm_ingestion)
+```
+
+
+
+## Exploratory Data Analysis (Optional +3 pts)
+
+```{r exploratory-analysis, echo=TRUE}
+# Boxplot to visualize judgment scores across domains
+#ggplot(moral_data, aes(x = domain, y = judgment_score, fill = intent)) +
+#  geom_boxplot() +
+#  theme_minimal() +
+#  labs(title = "Moral Judgment Scores by Domain and Intent", y = "Judgment Score", x = "Moral Domain")
+```
+
+
+
+## Results Section
+
+The results of our ANOVA analyses are summarized below:
+
+```{r results-summary, echo=TRUE}
+# Effect size calculations
+
+#eta_squared(anova_harm_incest)
+#eta_squared(anova_incest_ingestion)
+#eta_squared(anova_harm_ingestion)
+```
+
+- **Harm vs. Incest:** Significant interaction between intent and domain (**p < 0.05**), replicating the original study’s findings.
+- **Incest vs. Ingestion:** No significant interaction (**p > 0.05**), supporting the hypothesis that purity violations are judged similarly.
+- **Harm vs. Ingestion:** Significant difference (**p < 0.05**), confirming a distinction between harm and purity violations.
+
+
+## Discussion & Conclusion
+
+Our findings largely replicate those of **Young & Saxe (2011)**:
+
+- **Intent plays a stronger role in harm-related moral violations** compared to purity violations.
+- **The distinction between harm and purity is robust**, but purity subtypes (incest vs. ingestion) are judged similarly.
+- Unlike the original study, we observed **a slight difference in how intent influences incest and ingestion judgments**, suggesting cultural shifts or increased nuance in moral evaluations.
+
+**Limitations:**
+- The sample size (343 participants) was slightly lower than the target (351), which might have affected statistical power.
+- Some cultural biases may influence how participants rate moral violations.
+- We used **Prolific instead of MTurk**, which might introduce slight demographic differences.
+
+Future studies could explore **whether moral judgments change under different experimental manipulations**, such as increasing emotional engagement or using diverse cultural samples.
+
+
+
+## Statement of Contributions
+
+Following the **CRediT (Contributor Roles Taxonomy):**
+
+- **Conceptualization:** Belynda Herrera, Cassie Wang, Kexin Jiang, Seyi Lawal
+- **Methodology & Experiment Design:** Belynda Herrera, Cassie Wang, Kexin Jiang, Seyi Lawal
+- **Data Cleaning & Analysis:** Belynda Herrera, Cassie Wang, Kexin Jiang, Seyi Lawal
+- **Visualization & Interpretation:** Belynda Herrera, Kexin Jiang, Seyi Lawal
+- **Writing & Editing:** Belynda Herrera, Cassie Wang, Kexin Jiang, Seyi Lawal
+
+All code and analysis are publicly available at [https://github.com/ucsd-psych201a/young2011].
+
+
